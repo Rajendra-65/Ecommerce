@@ -1,0 +1,14 @@
+import React from 'react';
+
+const BlackButton = ({ children,onClick}) => {
+  return (
+    <button
+      className="bg-black text-white text-center py-2 px-2 rounded max-[849px]:text-xs"
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+};
+
+export default BlackButton;
