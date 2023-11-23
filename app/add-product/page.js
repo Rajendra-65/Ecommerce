@@ -127,7 +127,10 @@ const page = () => {
           ) : (
             <SelectComponent 
               key={productControls.id} 
-              field={productControls}
+              field={{
+                ...productControls,
+                selectedValue: formValues[productControls.id] || '',
+              }}
               onChange={(value) => updateFormValues(productControls.id, value)}
             />
           )
