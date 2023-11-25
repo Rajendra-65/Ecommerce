@@ -5,7 +5,7 @@ let AllProducts =[]
 const page = async () => {
   try {
     AllProducts = await Product.find()
-        return NextResponse.json(AllProducts,{status:200,statusText:'ok'})
+    AllProducts = AllProducts.map(product => product.toObject())
   } catch (error) {
     console.error('Error fetching products:', error);
   }

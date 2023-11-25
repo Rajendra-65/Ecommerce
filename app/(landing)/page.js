@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
+import { toast } from 'react-toastify'
 
 export default function Home() {
   const {user} = useUser()
