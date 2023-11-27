@@ -8,21 +8,22 @@ import { UploadCloudIcon } from "lucide-react";
 import axios from "axios";
 import { toast,ToastContainer } from "react-toastify";
 import { useParams } from "next/navigation";
-let existingProduct 
 const page = () => {
-
   const params = useParams()
   const {productId} = params
   const [formValues, setFormValues] = useState({});
-  const [ImageChosen,setImageChosen] = useState(false)
+  const [isMounted,setIsMounted] = useState(false)
+  const [existingProduct,setExistingProduct] = useState(null)
+  const [imageChosen,setImageChosen] = useState(true)
   const [sizes,setSizes] = useState([])
-  
+  useEffect(()=> {
+    setIsMounted(true)
+  },[])
   useEffect( ()=>{
     const fetchProduct = async () => {
         try{
           const response = await axios.get(`/api/update-product/${productId}`)
-          existingProduct = response.data
-          console.log(existingProduct)
+          setExistingProduct(response.data)
         }catch(error){
           console.error("Product not Fetched Properly")
         }
@@ -30,24 +31,22 @@ const page = () => {
     fetchProduct()
   },[productId])
   // it only update when productId Changes 
+  useEffect(() => {
+    console.log(existingProduct);
+    setExistingProduct(existingProduct)
+    setFormValues(existingProduct)
+  }, [existingProduct]);
+  // this useEffect used due to the asynchronous nature of state updates in React to ensure it runs after the state has been successfully updated
   const addSize = (newSize) => {
     if(existingProduct.availableSizes.includes(newSize)){
       return
     }
-    setSizes((prevSizes)=>[...prevSizes,newSize])
+    setSizes(formValues.availableSizes)
+    setSizes((prevSizes) => [...prevSizes, newSize]);
   }
 
   const submitForm = async () => {
     const requiredFields = ['name','price','description','category', 'deliveryInfo', 'onSale']
-    if(sizes.length === 0){
-      console.log("Sizes are not selected")
-      return
-    }
-
-    if(!ImageChosen){
-      console.log("Image not Chosen ")
-      return
-    }
 
     for (const field of requiredFields) {
       if (!formValues[field]) {
@@ -55,18 +54,26 @@ const page = () => {
         return;
       }
     }
-    // toast.success("Saved Successfully")
-    console.log(formValues)
-    // const {imageUrl,name,price,category,description,deliveryInfo,onSale,priceDrop} = formValues
-    // const availableSizes = JSON.stringify(sizes)
-    // const result = axios.post('/api/add-product',{imageUrl,availableSizes,name,price,category,description,deliveryInfo,onSale,priceDrop,
-    // }, {headers: { 'Content-Type': 'application/json' }})
-    // result.then((response)=>{
-    //   console.log(response.data)
-    // }).catch((error)=>{
-    //   console.log(error,"Error in storing the data")
-    // })
-  }
+
+    const {imageUrl,name,price,category,description,deliveryInfo,onSale,priceDrop} = formValues
+    const availableSizes = JSON.stringify(sizes)
+    const result = axios.post(`/api/put-product/${productId}`,{imageUrl,availableSizes,name,price,category,description,deliveryInfo,onSale,priceDrop,
+      }, {headers: { 'Content-Type': 'application/json' }})
+      result.then((response)=>{
+        toast('Product Updated Successfully', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+      }).catch((error)=>{
+      console.log(error,"Error in storing the data")
+  })
+}
 
   const updateFormValues = (id, value) => {
     setFormValues((prevValues) => ({
@@ -76,12 +83,15 @@ const page = () => {
   };
 
   const handleUpload = (result) => {
-    setImageChosen(true)
-    const imageUrl = result?.info?.secure_url
-    const id="imageUrl"
-    const value=imageUrl
-    updateFormValues(id, value)
+    setImageChosen(false)
+    if(!imageChosen){
+      const imageUrl = result?.info?.secure_url
+      const id="imageUrl"
+      const value=imageUrl
+      updateFormValues(id, value)
+    }
   }
+  if(existingProduct && formValues){
   return (
     <div className="flex w-full mx-5 my-5 flex-col mr-[68px]">
       <div className="flex m-auto">
@@ -99,50 +109,23 @@ const page = () => {
         <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
             <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
               <div className="flex items-center ps-3">
-                <input 
-                    id="S" 
-                    type="checkbox" 
-                    value="S" 
-                    className={`w-4 h-4 ${
-                      existingProduct && existingProduct.availableSizes && existingProduct.availableSizes.includes("S")
-                          ? "text-blue-600 bg-blue-500 border-blue-500"
-                          : "text-gray-600 bg-gray-100 border-gray-300"
-                      } rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500`
-                    }
-                    onClick={()=>addSize('S')}
+                <input id="S" type="checkbox" value="S" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                onClick={()=>addSize('S')}
                 />
                 <label htmlFor="S" className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">S</label>
               </div>
             </li>
             <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                 <div className="flex items-center ps-3">
-                  <input 
-                      id="M" 
-                      type="checkbox" 
-                      value="M" 
-                      className={`w-4 h-4 ${
-                        existingProduct && existingProduct.availableSizes && existingProduct.availableSizes.includes("M")
-                          ? "text-blue-600 bg-blue-500 border-blue-500"
-                          : "text-gray-600 bg-gray-100 border-gray-300"
-                      } rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500`
-                      }
-                      onClick={()=>addSize('M')}
+                  <input id="M" type="checkbox" value="M" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                  onClick={()=>addSize('M')}
                   />
                   <label htmlFor="M" className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">M</label>
                 </div>
             </li>
             <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                 <div className="flex items-center ps-3">
-                    <input 
-                      id="L" 
-                      type="checkbox" 
-                      value="L" 
-                      className={`w-4 h-4 ${
-                        existingProduct && existingProduct.availableSizes && existingProduct.availableSizes.includes("L")
-                          ? "text-blue-600 bg-blue-500 border-blue-500"
-                          : "text-gray-600 bg-gray-100 border-gray-300"
-                      } rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500`
-                    }
+                    <input id="L" type="checkbox" value="L" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     onClick={()=>addSize('L')}
                     />
                     <label htmlFor="L" className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">L</label>
@@ -150,16 +133,7 @@ const page = () => {
             </li>
             <li className="w-full dark:border-gray-600">
                 <div className="flex items-center ps-3">
-                  <input 
-                      id="XL" 
-                      type="checkbox" 
-                      value="XL" 
-                      className={`w-4 h-4 ${
-                        existingProduct && existingProduct.availableSizes && existingProduct.availableSizes.includes("S")
-                          ? "text-blue-600 bg-blue-500 border-blue-500"
-                          : "text-gray-600 bg-gray-100 border-gray-300"
-                      } rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500`
-                    }
+                  <input id="XL" type="checkbox" value="XL" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                   onClick={()=>addSize('XL')}
                   />
                   <label htmlFor="XL" className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">  
@@ -178,7 +152,7 @@ const page = () => {
               type={productControls.type}
               placeholder={productControls.placeholder}
               label={productControls.label}
-              value={existingProduct ? existingProduct.id : ""}
+              value={formValues[productControls.id] || ''}
               onChange={(value) => updateFormValues(productControls.id, value)}
             />
           ) : (
@@ -188,7 +162,7 @@ const page = () => {
                 ...productControls,
                 selectedValue: formValues[productControls.id] || '',
               }}
-              value={existingProduct ? existingProduct.id : ""}
+              value={formValues[productControls.id]}
               onChange={(value) => updateFormValues(productControls.id, value)}
             />
           )
@@ -199,6 +173,7 @@ const page = () => {
       </div>
     </div>
   );
-};
+  };
+}
 
 export default page;

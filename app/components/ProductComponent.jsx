@@ -30,6 +30,7 @@ const ProductComponent = ({product}) => {
                 alt={plainProduct.name}
                 src={plainProduct.imageUrl}
                 className="object-cover"
+                priority={true}
                 width={200}
                 height={200}
                 style={imageStyle}

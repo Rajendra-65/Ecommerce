@@ -1,6 +1,6 @@
 import React from 'react'
 
-const InputComponent = ({id,type,placeholder,label,onChange}) => {
+const InputComponent = ({id,type,placeholder,label,onChange,value}) => {
   return (
     <div
         className='w-full'
@@ -11,7 +11,9 @@ const InputComponent = ({id,type,placeholder,label,onChange}) => {
             type={type}
             placeholder={placeholder}
             label={label}
+            value={value}
             onChange={(e) => onChange(e.target.value)}
+            readOnly={false}
         />
     </div>
   )
