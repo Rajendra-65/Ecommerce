@@ -4,6 +4,7 @@ import React from 'react'
 import BlackButton from "../components/button"
 import {updateProduct} from "../../services/AdminServices"
 import { useRouter } from 'next/navigation'
+import axios from "axios"
 const isAdminView = true
 
 const ProductComponent = ({product}) => {
@@ -15,9 +16,20 @@ const ProductComponent = ({product}) => {
         // updateProduct(productId)
     }
 
-    const handleDeleteClick = (productId) => {
-        alert(productId)
+    const handleDeleteClick = async (productId) => {
+        try{    
+            const response = await axios.post(`/api/delete-product/${productId}`)
+            if(response.statusText === "ok"){
+                router.refresh()
+                console.log("Successfully post request sent and Product Deleted")
+            }else{
+                console.log("Failed to Delete the Product")
+            }
+        }catch(error){
+            console.log("error at the post request",error)
+        }
     }
+    
     const imageStyle = {
         width: '100%',
         height: '75%',
@@ -25,7 +37,7 @@ const ProductComponent = ({product}) => {
     }
     const plainProduct = product.toObject ? product.toObject() : product;
   return (
-    <div className="flex flex-col h-[500px] w-[300px] mx-3 my-3 relative">
+    <div className="flex flex-col h-[500px] w-[300px] mx-3 my-3  relative">
             <Image 
                 alt={plainProduct.name}
                 src={plainProduct.imageUrl}
