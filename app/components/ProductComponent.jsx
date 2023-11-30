@@ -4,8 +4,9 @@ import React from 'react'
 import BlackButton from "../components/button"
 import {updateProduct} from "../../services/AdminServices"
 import { useRouter } from 'next/navigation'
+import { addToCart } from '../../services/ProductService'
 import axios from "axios"
-const isAdminView = true
+const isAdminView = false
 
 const ProductComponent = ({product}) => {
     const router= useRouter()
@@ -14,6 +15,21 @@ const ProductComponent = ({product}) => {
         alert(productId)
         router.push(`/update-product/${productId}`)
         // updateProduct(productId)
+    }
+
+    const handleDetailsClick = (productId) => {
+        console.log("Details Of the product Clicked")
+        console.log(productId)
+        router.push(`/product-details/${productId}`)
+    }
+
+    const handleCartClick = async (productId) => {
+        try{
+            const newCart = await addToCart(productId)
+            console.log(newCart)
+        }catch(error){
+            console.log('error in updating cart',error)
+        }
     }
 
     const handleDeleteClick = async (productId) => {
@@ -34,8 +50,11 @@ const ProductComponent = ({product}) => {
         width: '100%',
         height: '75%',
         objectFit: 'cover',
+        cursor:'pointer'
     }
+
     const plainProduct = product.toObject ? product.toObject() : product;
+
   return (
     <div className="flex flex-col h-[500px] w-[300px] mx-3 my-3  relative">
             <Image 
@@ -46,6 +65,7 @@ const ProductComponent = ({product}) => {
                 width={200}
                 height={200}
                 style={imageStyle}
+                onClick={() => handleDetailsClick(plainProduct._id)}
             />
         <div className="flex  flex-col mt-2 mb-2 ml-2">
             <h1 className="font-bold">₹ {plainProduct.price}</h1>
@@ -60,12 +80,11 @@ const ProductComponent = ({product}) => {
                     </>
                 )
             :
-                <BlackButton>Add To Cart</BlackButton>
+                <BlackButton onClick={()=>{handleCartClick(plainProduct._id)}}>Add To Cart</BlackButton>
             }
-            
         </div>
     </div>
-  )
+)
 }
 
 export default ProductComponent
