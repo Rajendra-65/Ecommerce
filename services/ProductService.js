@@ -1,5 +1,5 @@
 import axios from "axios"
-import { Cart } from "../models/Cart"
+import {Cart} from "../models/Cart"
 import { connectDb } from "../utils/connectdb"
 
 export const getProduct = async (productId) => {
@@ -11,13 +11,20 @@ export const getProduct = async (productId) => {
 
 export async function addToCart(productId) {
     try {
-        // Create a new cart with the provided productId
-        connectDb()
-        const newCart = new Cart({ cartItem: [productId] });
-        newCart.save()
-        return newCart
+        console.log(productId)
+        const result = await axios.post(`/api/add-to-cart/${productId}`).then((response) => response.data)
+        return result
     } catch (error) {
         console.error("Error creating cart:", error);
         throw error;
+    }
+}
+
+export async function getCartItem () {
+    try{
+        const result = await axios.get('/api/get-cart-item').then((response)=>response.data)
+        return result
+    }catch(error){
+        console.log('error in getting the product',error)
     }
 }

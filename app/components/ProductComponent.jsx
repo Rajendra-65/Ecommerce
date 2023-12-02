@@ -1,7 +1,8 @@
 "use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import BlackButton from "../components/button"
+import CartModal from "../components/CartModal"
 import {updateProduct} from "../../services/AdminServices"
 import { useRouter } from 'next/navigation'
 import { addToCart } from '../../services/ProductService'
@@ -10,7 +11,7 @@ const isAdminView = false
 
 const ProductComponent = ({product}) => {
     const router= useRouter()
-
+    const [showCartModal,setShowCartModal] = useState(false)
     const handleUpdateClick = (productId) => {
         alert(productId)
         router.push(`/update-product/${productId}`)
@@ -26,6 +27,7 @@ const ProductComponent = ({product}) => {
     const handleCartClick = async (productId) => {
         try{
             const newCart = await addToCart(productId)
+            setShowCartModal(true)
             console.log(newCart)
         }catch(error){
             console.log('error in updating cart',error)
@@ -56,6 +58,7 @@ const ProductComponent = ({product}) => {
     const plainProduct = product.toObject ? product.toObject() : product;
 
   return (
+    <>
     <div className="flex flex-col h-[500px] w-[300px] mx-3 my-3  relative">
             <Image 
                 alt={plainProduct.name}
@@ -84,6 +87,7 @@ const ProductComponent = ({product}) => {
             }
         </div>
     </div>
+    </>
 )
 }
 
