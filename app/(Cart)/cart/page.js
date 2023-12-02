@@ -53,9 +53,29 @@ const page = () => {
 
   return (
     <div className="mx-5 my-5 z-50 shadow-2xl  shadow-zinc-300 border rounded-sm border-slate-200 w-[calc(100%-40px)] h-[calc(100vh-100px)] border-x-2 border-y-2">
-      {console.log(products)}
-
-      {!products && <h1>Hello</h1>}
+      {Object.entries(products).map(([productId, product]) => (
+        <div
+          key={productId}
+          className="my-5 mx-5 mb-5 flex flex-row justify-between"
+        >
+          <div className="flex flex-col w-full h-[200px]">
+            <Image
+              src={product.imageUrl}
+              height={80}
+              width={80}
+              style={ImageStyle}
+            />
+            <h1 className="flex font-bold text-center ml-3 absolute left-[134px] top-[145px]">
+              {product.name}
+            </h1>
+          </div>
+          <div className="flex flex-row absolute right-[34px] top-[142px]">
+            <h1 className="font-bold mr-2">{product.price}</h1>
+            <h1 className="text-orange-500 mr-2">Remove</h1>
+          </div>
+          {console.log("Hello")}
+        </div>
+      ))}
     </div>
   );
 };
