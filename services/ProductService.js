@@ -9,6 +9,15 @@ export const getProduct = async (productId) => {
     return result
 }
 
+export const RemoveFromCart = async(productId) =>{
+    try{
+        const result = await axios.post(`/api/remove-from-cart/${productId}`).then((response) => response.data)
+    return result
+    }catch(error){
+        console.log(error)
+    }
+    
+}
 export async function addToCart(productId) {
     try {
         console.log(productId)

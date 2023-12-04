@@ -1,22 +1,26 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { getCartItem, getProduct } from "../../../services/ProductService";
+import { getCartItem, getProduct,RemoveFromCart } from "../../../services/ProductService";
 let ItemArray = [];
-let products = [];
+let price = 0
+let count = 0
+// let products = [];
 const page = () => {
-  // const [ItemArray,setItemArray] = useState([])
-  // const [products,setProducts] = useState([])
+  const [products,setProducts] = useState([])
+  const [totalPrice,setTotalPrice] = useState(0)
   const [isMounted, setIsMounted] = useState(false);
   const [firstEffectComplete, setFirstEffectComplete] = useState(false);
+  const router = useRouter()
   const ImageStyle = {
     borderRadius: "0.5rem",
   };
-
+  // This one check for hydration Problem
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
+  // This one for the fetching the CartItem form Cart Model
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -31,51 +35,99 @@ const page = () => {
     };
     fetchProduct();
   }, []);
-
+  // This one for fetching the individual Product Details
   useEffect(() => {
-    if (firstEffectComplete) {
-      const fetchProduct = async () => {
-        console.log(ItemArray);
+    const fetchProduct = async () => {
+      if (firstEffectComplete) {
+        const fetchedProducts = [];
         for (const item of ItemArray) {
           try {
             const result = await getProduct(item);
-            products = [...products, result];
-            console.log(products);
-            console.log("Type of products:", typeof products);
+            fetchedProducts.push(result);
           } catch (error) {
             console.log("error in getting single product details", error);
           }
         }
-      };
-      fetchProduct();
+        setProducts(fetchedProducts)
+      }
+    };
+  
+    fetchProduct();
+  }, [firstEffectComplete]);
+  // For calculating the Total Price  
+  useEffect(() => {
+    const newTotalPrice = products.reduce((acc, product) => {
+      return acc + product.price;
+    }, 0);
+    setTotalPrice(newTotalPrice);
+  }, [products]);
+  // When Someone Click ON the remove button
+  const handleRemoveClick = async (productId) => {
+    try{
+      console.log("code reached to the handler remove")
+      const response = await RemoveFromCart(productId)
+      window.location.reload()
+    }catch(error){
+      console.log(error)
     }
-  }, [ItemArray, firstEffectComplete]);
-
+  }
   return (
-    <div className="mx-5 my-5 z-50 shadow-2xl  shadow-zinc-300 border rounded-sm border-slate-200 w-[calc(100%-40px)] h-[calc(100vh-100px)] border-x-2 border-y-2">
-      {Object.entries(products).map(([productId, product]) => (
-        <div
-          key={productId}
-          className="my-5 mx-5 mb-5 flex flex-row justify-between"
-        >
-          <div className="flex flex-col w-full h-[200px]">
-            <Image
-              src={product.imageUrl}
-              height={80}
-              width={80}
-              style={ImageStyle}
-            />
-            <h1 className="flex font-bold text-center ml-3 absolute left-[134px] top-[145px]">
-              {product.name}
-            </h1>
-          </div>
-          <div className="flex flex-row absolute right-[34px] top-[142px]">
-            <h1 className="font-bold mr-2">{product.price}</h1>
-            <h1 className="text-orange-500 mr-2">Remove</h1>
-          </div>
-          {console.log("Hello")}
-        </div>
-      ))}
+    <div className="mx-5 my-5 z-50 shadow-2xl  shadow-zinc-300 border rounded-sm border-slate-200 w-[calc(100%-40px)] h-[calc(100vh-100px)] border-x-2 border-y-2 overflow-y-auto">
+      {
+        products.length > 0 ? Object.entries(products).map(([productId, product],index) => (
+          <div 
+            key={productId} 
+            className="relative "
+          >
+            <div
+              className="my-5 mx-5 mb-5 flex flex-row justify-between"
+            >
+              <div className="flex flex-col w-full h-[200px]">
+                <Image
+                  alt={product.description}
+                  src={product.imageUrl}
+                  height={80}
+                  width={80}
+                  style={ImageStyle}
+                />
+                <h1 className="flex font-bold text-center ml-3 absolute top-[32px] left-[105px] w-3/4"
+                style={{ top: `calc(160 * ${index} + 160px)` }}
+                >
+                  {product.name}
+                </h1>
+              </div>
+              <div className="flex flex-row absolute right-[34px] top-[32px]"
+              style={{ top: `calc(160 * ${index} + 160px)` }}
+              >
+                <h1 className="font-bold mr-2">{product.price}</h1>
+                <h1 className="text-orange-500 mr-2"  onClick={() => handleRemoveClick(product._id)}>Remove</h1>
+              </div>
+            </div>
+            <div className='w-full h-[1px] bg-slate-400'/>
+          </div> 
+      )):<h1>Nothing To Show</h1>}
+      <div className="flex flex-col mb-1">
+        {
+          products.length >0 ?
+            <div className="flex flex-col">
+              <div className="flex justify-between mt-1 mb-1">
+                <h1 className="font-bold">Total Price</h1> 
+                <h1 className="font-bold">₹{totalPrice}</h1>
+              </div>
+              <div className="flex justify-between mt-1 mb-1">
+                <div className='w-full h-[1px] bg-slate-400'/>
+                <h1 className="font-bold">Shipping Charge</h1>
+                <h1 className="font-bold">₹0</h1>
+              </div>
+              <div className="flex justify-between mt-1 mb-1">
+                <div className='w-full h-[1px] bg-slate-400'/>
+                <h1 className="font-bold">Total Cart Cost</h1>
+                <h1 className="font-bold">₹{totalPrice}</h1>
+              </div>
+            </div>
+              : null
+        }
+      </div>
     </div>
   );
 };
