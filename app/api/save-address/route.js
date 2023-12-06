@@ -2,7 +2,8 @@ import { NextResponse } from "next/server"
 import { Address } from "../../../models/Address"
 export async function POST(request,{params}){
     try{
-        const {fullName,address,city,country,postalCode} = request.json()
+        const {fullName,address,city,country,postalCode} = await request.json()
+        console.log(fullName,address,city,country,postalCode)
         const Result = new Address({
             Name:fullName,
             Address:address,

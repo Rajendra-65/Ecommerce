@@ -3,7 +3,8 @@ import { addNewAddressFormControls } from '../../utils'
 import InputComponent from "./InputComponent"
 import BlackButton from './button'
 import axios from 'axios'
-const AddressForm = () => {
+let count = 0
+const AddressForm = ({onSubmit}) => {
     const [FormValues,SetFormValues] = useState({})
 
     const updateFormValues = (id,value) => {
@@ -14,11 +15,13 @@ const AddressForm = () => {
     }
 
     const SubmitHandler = () => {
+        onSubmit()
         const {fullName,address,city,country,postalCode} = FormValues
         if(fullName.length === 0 || address.length === 0 || city.length === 0 || country.length === 0 || postalCode.length === 0){
             console.log("check The filed one of them is remaining null")
             return
         }
+        
         const response = axios.post('/api/save-address',{fullName,address,city,country,postalCode}, {headers: { 'Content-Type': 'application/json' }})
         response.then((result)=>{
             console.log(result.data)
