@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { getCartItem, getProduct,RemoveFromCart } from "../../../services/ProductService";
+import BlackButton from "../../components/button";
 let ItemArray = [];
 let price = 0
 let count = 0
@@ -90,13 +91,13 @@ const page = () => {
                   width={80}
                   style={ImageStyle}
                 />
-                <h1 className="flex font-bold text-center ml-3 absolute top-[32px] left-[105px] w-3/4"
+                <h1 className="flex font-bold text-center ml-3 absolute top-[32px] left-[90px] w-[256px] sm:w-auto "
                 style={{ top: `calc(160 * ${index} + 160px)` }}
                 >
                   {product.name}
                 </h1>
               </div>
-              <div className="flex flex-row absolute right-[34px] top-[32px]"
+              <div className="flex flex-col sm:flex-row absolute right-[34px] top-[32px]"
               style={{ top: `calc(160 * ${index} + 160px)` }}
               >
                 <h1 className="font-bold mr-2">{product.price}</h1>
@@ -105,7 +106,8 @@ const page = () => {
             </div>
             <div className='w-full h-[1px] bg-slate-400'/>
           </div> 
-      )):<h1>Nothing To Show</h1>}
+        )):<h1>Nothing To Show</h1>
+      }
       <div className="flex flex-col mb-1">
         {
           products.length >0 ?
@@ -114,15 +116,19 @@ const page = () => {
                 <h1 className="font-bold">Total Price</h1> 
                 <h1 className="font-bold">₹{totalPrice}</h1>
               </div>
+              <div className='w-full h-[1px] bg-slate-400'/>
               <div className="flex justify-between mt-1 mb-1">
-                <div className='w-full h-[1px] bg-slate-400'/>
                 <h1 className="font-bold">Shipping Charge</h1>
                 <h1 className="font-bold">₹0</h1>
               </div>
+              <div className='w-full h-[1px] bg-slate-400'/>
               <div className="flex justify-between mt-1 mb-1">
-                <div className='w-full h-[1px] bg-slate-400'/>
                 <h1 className="font-bold">Total Cart Cost</h1>
                 <h1 className="font-bold">₹{totalPrice}</h1>
+              </div>
+              <div className='w-full h-[1px] bg-slate-400'/>
+              <div className="flex w-full mt-1 mb-1">
+                <BlackButton className="w-full" onClick={ () => {router.push('/checkout')}}>Check It Out</BlackButton>
               </div>
             </div>
               : null

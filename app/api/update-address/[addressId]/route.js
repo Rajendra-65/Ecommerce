@@ -1,6 +1,6 @@
 import { Address } from "../../../../models/Address";
 import mongoose from "mongoose";
-
+import {NextResponse} from "next/server"
 export const POST = async (request, { params }) => {
     try {
         console.log("Code Reached to the Post Request");
@@ -10,7 +10,7 @@ export const POST = async (request, { params }) => {
             return NextResponse.json({ error: 'Invalid or missing addressId' }, { status: "400", statusText: "Bad Request" });
         }
 
-        const convertedId = mongoose.Types.ObjectId(addressId);
+        const convertedId = new mongoose.Types.ObjectId(addressId);
 
         if (!request) {
             throw new Error('Request object is undefined or null.');
@@ -32,7 +32,7 @@ export const POST = async (request, { params }) => {
             },
             { new: true }
         );
-
+        console.log(updatedAddress)
         return NextResponse.json(updatedAddress, { status: "200", statusText: "Ok" });
     } catch (error) {
         console.log('Error in the Post route', error);

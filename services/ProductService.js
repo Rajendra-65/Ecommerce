@@ -1,6 +1,10 @@
 import axios from "axios"
-import {Cart} from "../models/Cart"
-import { connectDb } from "../utils/connectdb"
+
+export const getAllProduct = async () => {
+    console.log('code reached to the service of all product')
+    const result = await axios.get(`/api/get-all-product`)
+    return result.data
+}
 
 export const getProduct = async (productId) => {
     console.log(productId,"Get Product")
@@ -21,8 +25,8 @@ export const RemoveFromCart = async(productId) =>{
 export async function addToCart(productId) {
     try {
         console.log(productId)
-        const result = await axios.post(`/api/add-to-cart/${productId}`).then((response) => response.data)
-        return result
+        const result = await axios.post(`/api/add-to-cart/${productId}`)
+        return result.data
     } catch (error) {
         console.error("Error creating cart:", error);
         throw error;

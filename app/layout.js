@@ -3,7 +3,8 @@ import './globals.css'
 import Navbar from './components/Navbar'
 import { ClerkProvider } from '@clerk/nextjs'
 import { connectDb } from '../utils/connectdb'
-
+import {CreateUser} from "../utils/userCreation"
+import { auth } from '@clerk/nextjs'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
           <body className={inter.className}>
               {connectDb()}
+              {CreateUser()}
               <Navbar/>
               {children}
           </body>

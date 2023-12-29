@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server"
 import {Address} from "../../../../models/Address"
+import mongoose from "mongoose"
 
-export const GET = async ({params}) => {    
+export const GET = async (request,{params}) => {    
     try{
         console.log(params)
         const {addressId}= params
         console.log(addressId)
-        const address = Address.findById(addressId)
+        const address = await Address.findById(new mongoose.Types.ObjectId(addressId))
         return NextResponse.json(address,{statusText:"Ok"})
     }catch(error){
         console.log('error in getting the address in the route',error)
