@@ -4,6 +4,7 @@ import {User} from "../models/user"
 export const CreateUser = async () => {
     try{
         const user = await currentUser()
+        if(user){
         const customer_email = user.emailAddresses[0].emailAddress
         const allUser = await User.find()
         const foundUser = allUser.map( (user) => {
@@ -22,6 +23,10 @@ export const CreateUser = async () => {
         }
         else{
             console.log("successfylly Returning")
+            return
+        }
+    
+        }else{
             return
         }
     }catch(e){

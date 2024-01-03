@@ -4,9 +4,12 @@ import BlackButton from '../components/button'
 import React,{useEffect, useState} from 'react'
 import {getCartItem ,getProduct} from '../../services/ProductService'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { loadStripe } from '@stripe/stripe-js'
 import callStripeSession from "../../services/stripe/index"
+import {UserDetails} from "../../services/userDetails"
+import { createNewOrder } from '../../services/OrderServices'
+
 let ItemArray = []
 let checkoutFormData
 const page = () => {
@@ -17,7 +20,10 @@ const page = () => {
   const [totalPrice,setTotalPrice] = useState(null)
   const [isDisable,setIsDisable] = useState(false)
   const [isOrderProcessing,setIsOrderProcessing] = useState(false)
+  const [orderSuccess,setOrderSuccess] = useState(false)
+  const [user,setUser] = useState(null)
   const router = useRouter()
+  const params = useSearchParams()
   const publishableKey = 'pk_test_51OQuRxSF54Ms4ZBVju3x7dQCrgEtXEQfKzzx5iXB4DtFXTbeuyQo9tqmEEJS8EY3DuwOp9kv0x44SXPE0p6GiyrK006rVqcYDu'
   const stripePromise = loadStripe(publishableKey)
   const ImageStyle = {
@@ -74,6 +80,53 @@ const page = () => {
     setTotalPrice(newTotalPrice);
   }, [products]);
 
+  useEffect(()=>{
+    const fetchUser = async () => {
+      const res = await UserDetails()
+      setUser(res)
+    }
+    fetchUser()
+  },[])
+
+  useEffect(() => {
+    async function createFinalOrder () {
+      const isStripe = JSON.parse(localStorage.getItem('stripe'))
+      if(isStripe && params.get('status') === 'success' && products && products.length >0){
+        setIsOrderProcessing(true)
+        const getCheckoutFormData = JSON.parse(localStorage.getItem('checkoutFormData'))
+        console.log(getCheckoutFormData)
+        const createFinalCheckoutFormData = {
+          user:user?._id,
+          shippingAddress:getCheckoutFormData,
+          orderItems:products.map(item => ({
+            qty:1,
+            product:item._id
+          })),
+          paymentMethod:'Stripe',
+          totalPrice:products.reduce((acc, product) => {
+            return acc + product.price;
+          }, 0),
+          isPaid:true,
+          isProcessing:true,
+          paidAt:new Date()
+
+        }
+        const res = await createNewOrder(createFinalCheckoutFormData)
+        console.log(res)
+        if(res.success){
+          setIsOrderProcessing(false)
+          setOrderSuccess(true)
+          console.log("Order success")
+        }else{
+          setIsOrderProcessing(false)
+          setOrderSuccess(false)
+          console.log("order Failed")
+        }
+      }
+    }
+    createFinalOrder()
+  },[params.get('status'),products])
+
   const fetchAddress = async () => {
     try {
       const response = await axios.get("/api/get-address")
@@ -122,6 +175,41 @@ const page = () => {
     }catch(error){
       console.log(error)
     }
+  }
+
+  console.log(checkoutFormData)
+  
+  useEffect(()=>{
+    if(orderSuccess){
+      setTimeout(()=>{
+        setOrderSuccess(false)
+        router.push('/orders')
+      },[3000])
+    }
+  },[orderSuccess])
+
+  if(orderSuccess){
+    return <section className="h-screen bg-gray-200">
+            <div className='mx-auto px-4 sm:px-6 lg:px-8'>
+              <div className="mx-auto mt-8 max-w-screen-xl px-4 sm:px-6 lg:px-8">
+                <div className='bg-white shadow'>
+                  <div className='px-4 py-8 sm:py-10 flex flex-col ga-5'>
+                    <h1 className="font-bold text-lg">
+                      Your Payment is Successful and You Will be Redirected To Orders Page In 3 Seconds.....
+                    </h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+  }
+
+  if(isOrderProcessing){
+    return (
+      <div className="flex items-center font-bold">
+        Hold On Loading the details
+      </div>
+    )
   }
   return (
     <div className='flex mx-5 my-4 w-[100%] overflow-x-hidden'>

@@ -72,7 +72,7 @@ const Account = () => {
       <div className="mt-5 ml-3 mb-3 flex flex-col">
         <h1 className="font-bold mb-1">Email:<span className="font-normal">{user?.email}</span></h1>
         <h1 className="font-bold mb-1">userId:<span className="font-normal">{user?.userId}</span></h1>
-        <BlackButton>View Your Orders</BlackButton>
+        <BlackButton onClick={()=>router.push('/orders')}>View Your Orders</BlackButton>
       </div>
       <div className="flex flex-row ml-3 w-[100%]">
         <h1 className="font-bold">Your Addresses:</h1>

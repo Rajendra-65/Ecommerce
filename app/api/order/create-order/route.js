@@ -1,17 +1,33 @@
 import { currentUser } from "@clerk/nextjs"
 import { NextResponse } from "next/server"
-
-
+import Order from "../../../../models/Order"
+import { Cart } from "../../../../models/Cart"
 export const dynamic = "force-dynamic"
-
 export async function POST(req){
     try{
+        let saveNewOrder
+        let result
+        console.log("CreateOrder page reached.....")
         const user = await currentUser()
         if(user){
             const data = await req.json()
-            const saveNewOrder = await Order.create(data)
+            console.log(data)
+            try{
+                saveNewOrder = await Order.create(data)
+            }
+            catch(e){
+                console.log(e)
+                throw new Error("Error in Saving to cart")
+            }
+            console.log(saveNewOrder)
             if(saveNewOrder){
-                const result = await Cart.updateOne({}, { $set: { cartItem: [] } })
+                try{
+                    result = await Cart.updateOne({}, { $set: { cartItem: [] } })
+                }
+                catch(e){
+                    console.log(e)
+                    throw new Error("Error in updating the cart please place the order again")
+                }
                 console.log(result)
                 return NextResponse.json({
                     success:true,

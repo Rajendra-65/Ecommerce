@@ -3,8 +3,8 @@ import {Address} from "../../../models/Address"
 
 export const GET = async () => {
     try{
-        const address = await Address.find()
-        // console.log(address)
+        const address = await Address.find().select({ _id: 0, user: 0 });
+        console.log(address)
         if(address){
             return NextResponse.json(address,{status:200,statusText:"Ok"})
         }else{
