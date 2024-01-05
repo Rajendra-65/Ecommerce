@@ -10,8 +10,9 @@ export const metadata = {
 
 const page = async () => {
   try {
-    AllProducts = await Product.find()
-    AllProducts = AllProducts.map(product => product.toObject())
+    const AllProducts = await Product.find({ category: "kids" });
+    console.log(AllProducts)
+    // AllProducts = AllProducts.map(product => product.toObject())
   } catch (error) {
     console.error('Error fetching products:', error);
   }

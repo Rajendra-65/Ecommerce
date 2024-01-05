@@ -14,3 +14,8 @@ export const getProduct = async (productId) => {
 export const DeleteProduct = async (productId) => {
 
 }
+
+export const checkAdmin = async () => {
+    const result = await axios.get('/api/admin-check')
+    return result.data
+}

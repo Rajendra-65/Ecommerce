@@ -243,3 +243,8 @@ export const navOptions = [
 export const styles = {
     button:'mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase text-white'
 }
+
+export const adminEmails = [
+  "rajendrbehera9@gmail.com",
+  "mr.webdesigner65@gmail.com"
+]

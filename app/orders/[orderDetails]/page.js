@@ -6,22 +6,13 @@ import { useState,useEffect } from "react"
 import Image from "next/image"
 
 export default function OrderDetails () {
-    const [user,setUser] = useState()
+    const [user,setUser] = useState(null)
     const [fetchProduct,setFetchProduct] = useState()
     const [firstEffect,setFirstEffect] = useState(false)
     const [ready,isReady] = useState(false)
     const params = useParams()
     const {orderDetails} = params
 
-    useEffect(()=>{
-        const fetchUserDetails = async () =>  {
-            const user = await UserDetails() 
-            setUser(user)
-            setFirstEffect(true)
-        }
-        fetchUserDetails()
-    },[])
-    
     useEffect(()=>{
         const fetchProductFunction = async () => {
             console.log("Second UseEffect Reached......")
@@ -33,6 +24,16 @@ export default function OrderDetails () {
             fetchProductFunction()
         }
     },[user,firstEffect])
+
+    useEffect(()=>{
+        const fetchUserDetails = async () =>  {
+            console.log("First Effect is Reached...")
+            const user = await UserDetails() 
+            setUser(user)
+            setFirstEffect(true)
+        }
+        fetchUserDetails()
+    },[])
 
     return <>
     {user && fetchProduct && ready? <div className="py-14 px-4 md:px-6">
