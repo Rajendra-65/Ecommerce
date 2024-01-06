@@ -2,17 +2,12 @@
 import { adminNavOptions, navOptions, styles } from "../../utils/index";
 import React, { Fragment, useState, useEffect } from "react";
 import BlackButton from "./button";
-import { useRouter,usePathname } from "next/navigation";
+import { useRouter} from "next/navigation";
+import { checkAdmin } from "../../services/AdminServices";
+import {userDetails} from "../../services/userDetails"
 import { useAuth } from "@clerk/nextjs";
-import Link from "next/link";
-import { NextResponse } from "next/server";
-import { set } from "mongoose";
-const isSignedIn = false;
-const user = {
-  role: "admin",
-};
 const Navbar = () => {
-  const {isSignedIn} = useAuth()
+  let user
   const [isMounted, setIsMounted] = useState(false);
   const [isAdminView,setIsAdminView] = useState(false)
   const [openNav,setOpenNav] = useState(false)
@@ -21,6 +16,16 @@ const Navbar = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+  useEffect(()=>{
+    const fetchAdmin = async () => {
+      user = await userDetails()
+      const res = await checkAdmin()
+      if(res.data){
+        setIsAdminView(true)
+      }
+    }
+    fetchAdmin()
+  },[])
   useEffect(() => {
     // Update the windowSize state when the window is resized
     const handleResize = () => {
@@ -49,19 +54,16 @@ const Navbar = () => {
                 <li
                   className="cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded md:p-0"
                   key={item.id}
-                  onClick={()=>alert('hello')}
+                  onClick={()=>{router.push(`${item.path}`)}}
                 >
-                  <Link
-                    href={`${item.path}`}
-                  >
                     {item.label}
-                  </Link>
                 </li>
               ))
             : navOptions.map((item) => (
                   <li
                     className="cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded md:p-0"
                     key={item.id}
+                    onClick={()=>{router.push(`${item.path}`)}}
                   >
                     {item.label}
                   </li>
@@ -96,20 +98,13 @@ const Navbar = () => {
           ):null}
       </div>
       <div className="flex self-center gap-2 ">
-        {!isAdminView && isSignedIn ? (
+        {!isAdminView ? (
           <Fragment>
-            <BlackButton>Account</BlackButton>
-            <BlackButton>Cart</BlackButton>
+            <BlackButton onClick={()=>{router.push('/account')}}>Account</BlackButton>
+            <BlackButton onClick={()=>{router.push('/cart')}}>Cart</BlackButton>
           </Fragment>
-        ) : null}
-        {user?.role === "admin" ? (
-          isAdminView ? (
-            <BlackButton onClick={()=> {setIsAdminView(false)}}>Client View</BlackButton>
-          ) : (
-            <BlackButton onClick={() => {setIsAdminView(true)}}>Admin View</BlackButton>
-          )
-        ) : null}
-        {isSignedIn ? (
+        ) : (null)}
+        {user ? (
             <BlackButton onClick={()=>{router.push('/logOut')}}>Logout</BlackButton>
         ) : (
             <BlackButton onClick={()=>{router.push('/sign-in')}}>Register</BlackButton>

@@ -1,7 +1,5 @@
 import React from 'react'
 import Kids from './kids'
-import { Product } from '../../../models/Product'
-let AllProducts = []
 
 export const metadata = {
     title: 'Kids-section',
@@ -9,16 +7,9 @@ export const metadata = {
 }
 
 const page = async () => {
-  try {
-    const AllProducts = await Product.find({ category: "kids" });
-    console.log(AllProducts)
-    // AllProducts = AllProducts.map(product => product.toObject())
-  } catch (error) {
-    console.error('Error fetching products:', error);
-  }
   return (
     <div className='flex flex-row w-[100vw] h-[100vh] '>
-      <Kids category = "kids" AllProducts={AllProducts}/>
+      <Kids/>
     </div>
   )
 }

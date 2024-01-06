@@ -1,15 +1,22 @@
 import { currentUser } from "@clerk/nextjs"
 import { NextResponse } from "next/server"
-
+import {adminEmails} from "../../../utils/index"
 
 export const GET = async () => {
     try{
+        let flag = null
         const user = await currentUser()
         const userEmail = user.emailAddresses[0].emailAddress
-        if(userEmail === "rajendrbehera9@gmail.com"){
-            return NextResponse.json(true,{success:true,message:"The user is a admin User"})
+        for(let i=0;i<adminEmails.length;i++){
+            if(userEmail === adminEmails[i]){
+                flag = 1
+                break
+            }
+        }
+        if(flag){
+            return NextResponse.json({success:true,message:"The user is a admin User",data:true})
         }else{
-            return NextResponse.json(false,{success:false,message:"The user is not an admin User"})
+            return NextResponse.json({success:false,message:"The user is not an admin User",data:false})
         }
     }catch(e){
         console.log("error in the admin-check Route",e)

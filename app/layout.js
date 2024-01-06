@@ -5,6 +5,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { connectDb } from '../utils/connectdb'
 import {CreateUser} from "../utils/userCreation"
 import { auth } from '@clerk/nextjs'
+import { Toaster } from 'react-hot-toast'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -20,7 +21,7 @@ export default function RootLayout({ children }) {
               {connectDb()}
               {CreateUser()}
               <Navbar/>
-              {children}
+                {children}
           </body>
       </html>
     </ClerkProvider>

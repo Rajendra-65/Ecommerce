@@ -41,3 +41,30 @@ export async function getCartItem () {
         console.log('error in getting the product',error)
     }
 }
+
+export const getKidProducts = async () => {
+    try{
+        const result = await axios.get('/api/get-kid-products')
+        return result.data
+    }catch(e){
+        console.log(e)
+    }
+}
+
+export const getWomenProducts = async () => {
+    try{
+        const result = await axios.get('/api/get-women-products')
+        return result.data
+    }catch(e){
+        console.log(e)
+    }
+}
+
+export const getMenProducts = async () => {
+    try{
+        const result = await axios.get('/api/get-men-products')
+        return result.data
+    }catch(e){
+        console.log(e)
+    }
+}

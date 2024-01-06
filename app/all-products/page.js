@@ -65,10 +65,11 @@ const handleUpdateClick = (productId) => {
 }
 
 const imageStyle = {
-      width: '100%',
-      height: '75%',
-      objectFit: 'cover',
-      cursor:'pointer'
+    width: '100%',
+    height: '75%',
+    objectFit: 'cover',
+    cursor:'pointer',
+    borderBottom: "1px solid black" 
 }
 
     // const plainProduct = product.toObject ? product.toObject() : product;
@@ -77,7 +78,7 @@ return (
         {products.map((product,i) => (
         <>
             <div 
-                className="flex flex-col h-[500px] w-[300px] mx-3 my-3  relative"
+                className="flex flex-col h-[500px] w-[300px] mx-3 my-3  relative border-[1px]"
                 key={i}
             >
                     <Image 
