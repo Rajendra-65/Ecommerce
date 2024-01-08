@@ -19,7 +19,6 @@ const page = () => {
   useEffect(()=>{
     const getUser = async () =>{
       const fetchedUser = await checkAdmin()
-      console.log(fetchedUser)
       if(fetchedUser.data){
         setIsAdminView(true)
       }

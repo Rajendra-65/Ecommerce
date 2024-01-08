@@ -9,6 +9,5 @@ export const GET = async (request,{params}) => {
         return NextResponse.json(deletedProduct,{status:200,statusText:"OK"})
     }catch(error){
         return NextResponse.json('error in deleting the Product',{status:500,statusText:"NotOk"})
-        console.log(error)
     }
 }

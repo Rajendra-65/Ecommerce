@@ -10,13 +10,11 @@ export async function GET(req,{params}) {
     const user = await currentUser();
     if (user) {
       const {id} = params
-      console.log(id)
       try{
         await connectDb();
         extractAllOrders = await Order.find({ user: id }).populate(
           "orderItems.product"
         );
-        console.log(extractAllOrders)
       }catch(e){
         console.log('error in extracting Products',e)
       }

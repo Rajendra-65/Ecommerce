@@ -22,8 +22,6 @@ export async function GET(request){
             return NextResponse.json({ statusText: "NotOk" }, { status: 404 });
         }
         const cartItem = cart.cartItem
-        console.log(cartItem)
-        console.log(cartItem[0])
         return NextResponse.json({status:200,statusText:"ok",data:cartItem})
     }catch(error){
         console.log('error in the route',error)

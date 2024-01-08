@@ -19,7 +19,6 @@ export const GET = async () => {
             return NextResponse.json({success:false,message:"The user is not an admin User",data:false})
         }
     }catch(e){
-        console.log("error in the admin-check Route",e)
         return NextResponse.json({success:false,message:"Error in the try block"})
     }
 }

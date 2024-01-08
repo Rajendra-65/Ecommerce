@@ -28,7 +28,6 @@ const Orders = () => {
     const user = await UserDetails()
     const fetchedOrders = await getAllOrdersForUser(user?._id)
     setAllOrders(fetchedOrders.data)
-    console.log(AllOrders)
   }
 
   return (
@@ -63,8 +62,6 @@ const Orders = () => {
                                     className='shrink-0'
                                     key={index}
                                   >
-                                    {console.log(orderItem.product)}
-                                    {console.log(orderItem.product.imageUrl)}
                                     <Image
                                       alt="OrderItem"
                                       width={60}

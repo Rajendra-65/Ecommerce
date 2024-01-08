@@ -7,7 +7,7 @@ import { getSingleAddress } from '../../../services/AddressService';
 const Page = () => {
   const params = useParams();
   const { addressId } = params;
-  console.log(addressId);
+  (addressId);
 
   const [address, setAddress] = useState(null);
 
@@ -16,7 +16,6 @@ const Page = () => {
       try {
         const fetchedAddress = await getSingleAddress(addressId);
         setAddress(fetchedAddress);
-        console.log(fetchedAddress);
       } catch (error) {
         console.error('Error fetching address:', error);
       }
@@ -25,12 +24,9 @@ const Page = () => {
     fetchData();
   }, [addressId]);
 
-  console.log(addressId);
-
   return (
     <div className='mx-5 my-5 z-50 border border-slate-200 shadow-2xl'>
       <div>
-        {console.log(addressId)}
         {address && <UpdateAddress address={address} addressId={addressId} />}
       </div>
     </div>

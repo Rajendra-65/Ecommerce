@@ -7,11 +7,9 @@ export async function POST(req){
     try{
         let saveNewOrder
         let result
-        console.log("CreateOrder page reached.....")
         const user = await currentUser()
         if(user){
             const data = await req.json()
-            console.log(data)
             try{
                 saveNewOrder = await Order.create(data)
             }
@@ -19,7 +17,6 @@ export async function POST(req){
                 console.log(e)
                 throw new Error("Error in Saving to cart")
             }
-            console.log(saveNewOrder)
             if(saveNewOrder){
                 try{
                     result = await Cart.updateOne({}, { $set: { cartItem: [] } })
@@ -28,7 +25,6 @@ export async function POST(req){
                     console.log(e)
                     throw new Error("Error in updating the cart please place the order again")
                 }
-                console.log(result)
                 return NextResponse.json({
                     success:true,
                     message:'Products are on the Way!'

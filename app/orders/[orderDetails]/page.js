@@ -15,7 +15,6 @@ export default function OrderDetails () {
 
     useEffect(()=>{
         const fetchProductFunction = async () => {
-            console.log("Second UseEffect Reached......")
             const fetchedProduct = await getOrderDetails(orderDetails)
             setFetchProduct(fetchedProduct)
             isReady(true)
@@ -27,7 +26,6 @@ export default function OrderDetails () {
 
     useEffect(()=>{
         const fetchUserDetails = async () =>  {
-            console.log("First Effect is Reached...")
             const user = await UserDetails() 
             setUser(user)
             setFirstEffect(true)

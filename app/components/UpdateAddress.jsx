@@ -7,8 +7,6 @@ import BlackButton from './button'
 
 const UpdateAddress = ({address , addressId}) => {
     const [FormValues,SetFormValues] = useState({})
-
-    console.log(address.City)
     const updateFormValues = (id,value) => {
         SetFormValues((prevValues)=>({
             ...prevValues,
@@ -21,11 +19,7 @@ const UpdateAddress = ({address , addressId}) => {
     },[])
 
     const handleClick = async () => {
-        // const {fullName,address,city,country,postalCode} = FormValues
-        console.log(addressId,'of the page handleClick UpdateAddress')
         const response = await updateSingleAddress(addressId,FormValues)
-        console.log(response)
-        console.log('submit clicked')
     }
 
     return (

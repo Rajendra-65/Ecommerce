@@ -7,7 +7,6 @@ export const CreateUser = async () => {
 
         if (user) {
             const customer_email = user.emailAddresses[0].emailAddress;
-            console.log("userCreation email", customer_email);
 
             const existingUser = await User.findOne({ email: customer_email });
 
@@ -19,7 +18,6 @@ export const CreateUser = async () => {
                 });
 
                 await createdUser.save();
-                console.log("User Saved Successfully");
             } else {
                 console.log("User already exists in the database");
                 return;

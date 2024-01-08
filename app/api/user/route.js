@@ -7,9 +7,7 @@ export const  GET = async () => {
     try{
         const user = await currentUser()
         const userEmail = user.emailAddresses[0].emailAddress
-        console.log(userEmail)
         const userDetails = await User.findOne({email:userEmail})
-        console.log(userDetails)
         return NextResponse.json({status:200,statusText:"successfully Posted to the client",data:userDetails})
     }catch(error){
         console.log(error)

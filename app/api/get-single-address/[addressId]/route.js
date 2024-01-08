@@ -4,9 +4,7 @@ import mongoose from "mongoose"
 
 export const GET = async (request,{params}) => {    
     try{
-        console.log(params)
         const {addressId}= params
-        console.log(addressId)
         const address = await Address.findById(new mongoose.Types.ObjectId(addressId))
         return NextResponse.json(address,{statusText:"Ok"})
     }catch(error){

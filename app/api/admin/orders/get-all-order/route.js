@@ -14,7 +14,6 @@ export async function GET(req){
         const userEmail = user.emailAddresses[0].emailAddress
         await connectDb()
         for( let i =0;i<adminEmails.length;i++){
-            console.log(adminEmails[i])
             if(adminEmails[i] === userEmail){
                 flag = 1
                 break
@@ -25,11 +24,9 @@ export async function GET(req){
                 try{
                     getAllOrders = await Order.find({})
                 }catch(e){
-                    console.log(e)
                 }
                 
                 if(getAllOrders){
-                    console.log(getAllOrders)
 
                     return NextResponse.json({
                         success:true,
@@ -45,7 +42,6 @@ export async function GET(req){
                 }
             }
             catch(e){
-                console.log("error in getting all Order and populating the user",e)
                 return NextResponse.json({success:false})
             }
         }else{
@@ -55,7 +51,6 @@ export async function GET(req){
             })
         }
     }catch(e){
-        console.log("error in the get-all-order Route",e)
         return NextResponse.json({
             success:false,
             message:"Something went wrong ! Please try again later"

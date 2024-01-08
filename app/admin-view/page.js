@@ -21,13 +21,12 @@ const Page = () => {
     }
 
     const handleUpdateOrderStatus = async (id) => {
-        console.log(id)
-        console.log("update handler reached...")
+        
         const res = await updateStatusOfOrder({
             id,
             isProcessing:false
         })
-        console.log(res)
+        
         if(res.success){
             extractAllOrdersForAllUsers()
         }
@@ -36,23 +35,18 @@ const Page = () => {
     async function extractAllOrdersForAllUsers() {
         const res = await getAllOrdersForAllUser()
         if (res) {
-            console.log("SuccessPoint reached ...")
-            console.log(res.data)
             setAllOrdersForAllUsers(res.data)
-            console.log(allOrderForAllUsers)
         }
     }
 
     useEffect(()=>{
         if(user!==null && firstEffect){
-            console.log("Second Effect Reached...")
             extractAllOrdersForAllUsers()
         }
     },[user,firstEffect])
 
     useEffect(() => {
         const fetchUser = async () => {
-            console.log("First Effect Reached")
             const uDetails = await UserDetails()
             setUser(uDetails)
             setFirstEffect(true)
@@ -61,7 +55,6 @@ const Page = () => {
     }, [])
 
     useEffect(() => {
-        console.log("Updated allOrderForAllUsers:", allOrderForAllUsers);
         const fetchImages = async () => {
             const tempImages = [];
             for (let i = 0; i < allOrderForAllUsers.length; i++) {

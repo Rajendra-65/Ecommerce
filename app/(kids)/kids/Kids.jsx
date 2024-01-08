@@ -17,7 +17,6 @@ const Kids = () => {
     useEffect(()=>{
         const checkForAdmin = async () => {
             const res = await checkAdmin()
-            console.log(res)
             if(res.data){
                 setIsAdminView(true)                
             }
@@ -28,9 +27,7 @@ const Kids = () => {
     
     useEffect(()=>{
         const fetchKidProduct = async () => {
-            console.log("Kid Product Reached")
             const res = await getKidProducts()
-            console.log(res.data)
             setAllProducts(res.data)
         }
         fetchKidProduct()
@@ -55,12 +52,14 @@ const handleDeleteClick = async (productId) => {
         const response = await axios.post(`/api/delete-product/${productId}`)
         if(response.statusText === "ok"){
             router.refresh()
-            console.log("Successfully post request sent and Product Deleted")
+            toast.success("SuccessFully Deleted",{position:'top-right'})
         }else{
-            console.log("Failed to Delete the Product")
+            toast.error("fail to delete try again",{position:'top-right'})
+
         }
     }catch(error){
-        console.log("error at the post request",error)
+        toast.error("try again please",{position:'top-right'})
+
     }
 }
 

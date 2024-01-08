@@ -1,5 +1,4 @@
 import mongoose,{Schema} from "mongoose"
-console.log("code reached t the address")
 const AddressSchema = new Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,

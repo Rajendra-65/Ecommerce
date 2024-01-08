@@ -13,7 +13,6 @@ export const GET = async () => {
             console.log(e)
         }
         const address = await Address.find({user:fetchedUser._id}).select({ _id: 0, user: 0 });
-        console.log(address)
         if(address){
             return NextResponse.json(address,{status:200,statusText:"Ok"})
         }else{

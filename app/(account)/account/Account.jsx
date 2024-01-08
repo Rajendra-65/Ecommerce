@@ -23,14 +23,13 @@ const Account = () => {
   // For fetching the Address from the database....
 
   useEffect(()=>{
-    console.log("Second Effect Reached")
+    ("Second Effect Reached")
     fetchAddress()
     console.log(addresses)
   },[firstEffect])
   
   useEffect( () => {
     const fetchedRoute = async () => {
-      console.log("First Effect Reached")
       const fetchedUser = await UserDetails()
       setUser(fetchedUser.data)
       setFirstEffect(true)
@@ -42,7 +41,7 @@ const Account = () => {
     try {
       const response = await axios.get("/api/get-address")
       const data = response.data
-      console.log(data)
+      
       setAddresses(data)
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -50,14 +49,14 @@ const Account = () => {
   };
 
   const updateHandler = async (addressId) => {
-    console.log(addressId)
+    
       router.push(`/update-address/${addressId}`)
   }
 
   const deleteHandler = async (addressId) => {
-    console.log(addressId)
+    
     const result = await deleteAddress(addressId)
-    console.log(result)
+    
     window.location.reload()
   }
 

@@ -4,7 +4,6 @@ import { currentUser } from "@clerk/nextjs";
 import { User } from "../../../../models/user";
 
 export async function POST(request, { params }) {
-    console.log("Cart Route Reached....");
     const { productId } = params;
     const presentUser = await currentUser();
     const customer_email = presentUser.emailAddresses[0].emailAddress;

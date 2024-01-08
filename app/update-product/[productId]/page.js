@@ -32,7 +32,6 @@ const page = () => {
   },[productId])
   // it only update when productId Changes 
   useEffect(() => {
-    console.log(existingProduct);
     setExistingProduct(existingProduct)
     setFormValues(existingProduct)
   }, [existingProduct]);
@@ -50,7 +49,7 @@ const page = () => {
 
     for (const field of requiredFields) {
       if (!formValues[field]) {
-        console.log(`Please fill in the "${field}" field.`);
+        toast.info(`Please fill in the "${field}" field`,{position:'top-right'})
         return;
       }
     }
@@ -71,7 +70,7 @@ const page = () => {
           theme: "light",
           });
       }).catch((error)=>{
-      console.log(error,"Error in storing the data")
+      toast.error("something went wrong try again",{position:'top-right'})
   })
 }
 

@@ -1,7 +1,6 @@
 import axios from "axios"
 
 export const updateProduct = async (productId) => {
-    console.log(productId)
     const result = await axios.put(`updateProduct/${productId}`).then((response) => response.data)
     return result
 }

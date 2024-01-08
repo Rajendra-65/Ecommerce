@@ -9,7 +9,6 @@ import axios from "axios"
 import { toast } from 'react-toastify'
 let AllProducts = []
 const Page = () => {
-    console.log("Code is inside the Block of the all-products")
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -41,8 +40,6 @@ const Page = () => {
     },[])
 
 const handleDetailsClick = (productId) => {
-        console.log("Details Of the product Clicked")
-        console.log(productId)
         router.push(`/product-details/${productId}`)
 }
 
@@ -62,12 +59,14 @@ const handleDeleteClick = async (productId) => {
         const response = await axios.post(`/api/delete-product/${productId}`)
         if(response.statusText === "ok"){
             router.refresh()
-            console.log("Successfully post request sent and Product Deleted")
+            toast.success("SuccessFully Deleted",{position:'top-right'})
         }else{
-            console.log("Failed to Delete the Product")
+            toast.error ("failed to Delete",{position:'top-right'})
+
         }
     }catch(error){
-        console.log("error at the post request",error)
+        toast.error("Try Again",{position:'top-right'})
+
     }
 }
 

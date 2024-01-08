@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { getCartItem, getProduct,RemoveFromCart } from "../../../services/ProductService";
 import BlackButton from "../../components/button";
+import { toast } from "react-toastify";
 let ItemArray = [];
 let price = 0
 let count = 0
@@ -27,10 +28,10 @@ const page = () => {
       try {
         const response = await getCartItem();
         ItemArray = [response.data];
-        console.log(ItemArray)
+        
         setFirstEffectComplete(true);
       } catch (error) {
-        console.log("error in fetching the cart Products", error);
+        
       }
     };
     fetchProduct();
@@ -42,11 +43,11 @@ const page = () => {
         const fetchedProducts = [];
         for(const item of ItemArray[0]){
           try {
-            console.log(item)
+            
             const result = await getProduct(item);
             fetchedProducts.push(result.data);
           } catch (error) {
-            console.log("error in getting single product details", error);
+            
           }
         }
         setProducts(fetchedProducts)
@@ -68,7 +69,7 @@ const page = () => {
       const response = await RemoveFromCart(productId)
       window.location.reload()
     }catch(error){
-      console.log(error)
+      toast.error('Error in deleting the product',{position:'top-right'})
     }
   }
   return (

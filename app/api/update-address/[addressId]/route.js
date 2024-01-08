@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import {NextResponse} from "next/server"
 export const POST = async (request, { params }) => {
     try {
-        console.log("Code Reached to the Post Request");
         const { addressId } = params;
 
         if (!addressId || !mongoose.Types.ObjectId.isValid(addressId)) {

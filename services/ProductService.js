@@ -1,15 +1,12 @@
 import axios from "axios"
 
 export const getAllProduct = async () => {
-    console.log('code reached to the service of all product')
     const result = await axios.get(`/api/get-all-product`)
     return result.data
 }
 
 export const getProduct = async (productId) => {
-    console.log(productId,"Get Product")
     const result = await axios.get(`/api/product-details/${productId}`)
-    console.log(result)
     return result.data
 }
 
@@ -24,7 +21,6 @@ export const RemoveFromCart = async(productId) =>{
 }
 export async function addToCart(productId) {
     try {
-        console.log(productId)
         const result = await axios.post(`/api/add-to-cart/${productId}`)
         return result.data
     } catch (error) {

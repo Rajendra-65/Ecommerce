@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import { Product } from "../../../../models/Product"
 export async function POST (request,{params}){
     try{
-        console.log("Code Reached to the Post Request")
         const {productId} = params
         if(!request){
             throw new Error ('Request object is undefined or null.')

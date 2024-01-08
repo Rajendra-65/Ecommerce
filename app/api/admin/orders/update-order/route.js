@@ -13,7 +13,6 @@ export async function PUT(req){
         await connectDb()
         const user = await currentUser()
         const data = await req.json()
-        console.log(data)
         const userEmail = user.emailAddresses[0].emailAddress
         for( let i =0;i<adminEmails.length;i++){
             if(adminEmails[i] === userEmail){
@@ -26,7 +25,6 @@ export async function PUT(req){
                 id,
                 isProcessing
             } = data
-            console.log(id)
             try{
                 updateOrder = await Order.findOneAndUpdate(
                     {_id:id},
@@ -36,7 +34,6 @@ export async function PUT(req){
                     {new:true}
                 )
             }catch(e){
-                console.log(e)
             }
             
             if(updateOrder){
@@ -58,7 +55,6 @@ export async function PUT(req){
         }
         
     }catch(e){
-        console.log(e)
         return NextResponse.json({
             success:false,
             message:"Something went wrong ! Please try again later"

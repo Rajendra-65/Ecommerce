@@ -4,6 +4,7 @@ import {useParams} from 'next/navigation'
 import BlackButton from "../../../components/button"
 import axios from "axios"
 import Image from 'next/image'
+import {toast} from 'react-toastify'
 import { getProduct } from '../../../../services/ProductService'
 import Details from './Details'
 
@@ -26,16 +27,11 @@ const page =() => {
     useEffect(()=>{
         const fetchProduct = async () => {
             try{
-                console.log(params,"above get product")
                 const fetchedProduct = await getProduct(productId)
                 setProduct(fetchedProduct)
-                if(!fetchedProduct){
-                    console.log("product is not found")
-                }
-                console.log(product)
-                console.log(product.name)
+                
             }catch(error){
-                console.log(error)
+                toast.error("SuccessFully Deleted",{position:'top-right'})
             }
         }
         fetchProduct()

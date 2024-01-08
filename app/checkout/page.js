@@ -37,8 +37,6 @@ const page = () => {
         const response = await getCartItem();
         ItemArray = [response.data]
         setFirstEffectComplete(true)
-        console.log(response);
-        console.log(ItemArray);
       } catch (error) {
         console.log("error in fetching the cart Products", error);
       }
@@ -67,11 +65,9 @@ const page = () => {
 
   useEffect(()=>{
     fetchAddress()
-    console.log(addresses)
   },[])
 
   useEffect(() => {
-  console.log('State Updated:', addressClick);
   }, [addressClick]);
 
   useEffect(() => {
@@ -84,7 +80,6 @@ const page = () => {
   useEffect(()=>{
     const fetchUser = async () => {
       const res = await UserDetails()
-      console.log(res.data)
       setUser(res.data)
     }
     fetchUser()
@@ -96,7 +91,6 @@ const page = () => {
       if(isStripe && params.get('status') === 'success' && products && products.length >0){
         setIsOrderProcessing(true)
         const getCheckoutFormData = JSON.parse(localStorage.getItem('checkoutFormData'))
-        console.log(getCheckoutFormData)
         const createFinalCheckoutFormData = {
           user:user?._id,
           shippingAddress:getCheckoutFormData,
@@ -114,7 +108,6 @@ const page = () => {
 
         }
         const res = await createNewOrder(createFinalCheckoutFormData)
-        console.log(res)
         if(res.success){
           setIsOrderProcessing(false)
           setOrderSuccess(true)
@@ -133,7 +126,6 @@ const page = () => {
     try {
       const response = await axios.get("/api/get-address")
       const data = response.data
-      console.log(data)
       setAddresses(data)
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -178,8 +170,6 @@ const page = () => {
       console.log(error)
     }
   }
-
-  console.log(checkoutFormData)
   
   useEffect(()=>{
     if(orderSuccess){

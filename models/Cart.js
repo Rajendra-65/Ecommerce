@@ -1,5 +1,4 @@
 import mongoose,{Schema} from "mongoose";
-console.log("code reached t the cart")
 
 
 const cartSchema = new Schema({

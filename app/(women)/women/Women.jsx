@@ -15,7 +15,6 @@ const Women = () => {
     useEffect(()=>{
         const checkForAdmin = async () => {
             const res = await checkAdmin()
-            console.log(res)
             if(res.data){
                 setIsAdminView(true)
                 
@@ -33,8 +32,6 @@ const Women = () => {
   },[firstEffect])
 const router = useRouter()
 const handleDetailsClick = (productId) => {
-    console.log("Details Of the product Clicked")
-    console.log(productId)
     router.push(`/product-details/${productId}`)
 }
 

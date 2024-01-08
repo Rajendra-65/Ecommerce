@@ -3,7 +3,6 @@ import axios from "axios"
 export const createNewOrder = async (formData) => {
 
     try{
-        console.log(formData)
         const res = await axios.post(
             '/api/order/create-order',
             JSON.stringify(formData),
@@ -55,7 +54,6 @@ export const getAllOrdersForAllUser = async () => {
 
 export const updateStatusOfOrder = async (formData) => {
     try{
-        console.log(formData)
         const res = await axios.put(
             `/api/admin/orders/update-order`,
             JSON.stringify(formData),
