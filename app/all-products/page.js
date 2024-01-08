@@ -4,14 +4,16 @@ import Image from 'next/image'
 import BlackButton from "../components/button"
 import { useRouter } from 'next/navigation'
 import {getAllProduct , addToCart } from '../../services/ProductService'
+import { checkAdmin } from '../../services/AdminServices'
 import axios from "axios"
-const isAdminView = false
+import { toast } from 'react-toastify'
 let AllProducts = []
 const Page = () => {
     console.log("Code is inside the Block of the all-products")
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isAdminView,setIsAdminView] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
@@ -24,11 +26,20 @@ const Page = () => {
             } finally {
                 setIsLoading(false);
             }
-        }
-    
+        }    
         fetchProducts();
     }, []);
     
+    useEffect(()=>{
+        const fetchRole=async()=>{
+            const user = checkAdmin()
+            if(user.data){
+                setIsAdminView(true)
+            }
+        }
+        fetchRole()
+    },[])
+
 const handleDetailsClick = (productId) => {
         console.log("Details Of the product Clicked")
         console.log(productId)
@@ -38,9 +49,11 @@ const handleDetailsClick = (productId) => {
 const handleCartClick = async (productId) => {
     try{
         const newCart = await addToCart(productId)
-        console.log(newCart)
+        if(newCart){
+            toast.success("SuccessFully Added to cart",{position:"top-right"})
+        }
     }catch(error){
-        console.log('error in updating cart',error)
+        toast.error("Error in adding to the cart",{position:"top-right"})
     }
 }
 
@@ -74,11 +87,11 @@ const imageStyle = {
 
     // const plainProduct = product.toObject ? product.toObject() : product;
 return (
-    <div className='flex flex-row mx-[25px] my-[10px] w-full ml-[61px] flex-wrap items-start'>
+    <div className='flex flex-row mx-[25px] my-[10px] w-full ml-[61px] flex-wrap items-start overflow-x-hidden !important'>
         {products.map((product,i) => (
         <>
             <div 
-                className="flex flex-col h-[500px] w-[300px] mx-3 my-3  relative border-[1px]"
+                className="flex flex-col h-[500px] w-[300px] mx-3 my-3  relative border-[1px] border-black"
                 key={i}
             >
                     <Image 

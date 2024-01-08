@@ -9,6 +9,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import callStripeSession from "../../services/stripe/index"
 import {UserDetails} from "../../services/userDetails"
 import { createNewOrder } from '../../services/OrderServices'
+import { toast } from 'react-toastify'
 
 let ItemArray = []
 let checkoutFormData
@@ -34,7 +35,7 @@ const page = () => {
     const fetchProduct = async () => {
       try {
         const response = await getCartItem();
-        ItemArray = [...response]
+        ItemArray = [response.data]
         setFirstEffectComplete(true)
         console.log(response);
         console.log(ItemArray);
@@ -49,10 +50,10 @@ const page = () => {
     const fetchProduct = async () => {
       if (firstEffectComplete) {
         const fetchedProducts = [];
-        for (const item of ItemArray) {
+        for (const item of ItemArray[0]) {
           try {
             const result = await getProduct(item);
-            fetchedProducts.push(result);
+            fetchedProducts.push(result.data);
           } catch (error) {
             console.log("error in getting single product details", error);
           }
@@ -83,7 +84,8 @@ const page = () => {
   useEffect(()=>{
     const fetchUser = async () => {
       const res = await UserDetails()
-      setUser(res)
+      console.log(res.data)
+      setUser(res.data)
     }
     fetchUser()
   },[])
@@ -116,11 +118,11 @@ const page = () => {
         if(res.success){
           setIsOrderProcessing(false)
           setOrderSuccess(true)
-          console.log("Order success")
+          toast.success("order Success")
         }else{
           setIsOrderProcessing(false)
           setOrderSuccess(false)
-          console.log("order Failed")
+          toast.error("order Success")
         }
       }
     }
@@ -184,7 +186,7 @@ const page = () => {
       setTimeout(()=>{
         setOrderSuccess(false)
         router.push('/orders')
-      },[3000])
+      },[5000])
     }
   },[orderSuccess])
 
@@ -195,7 +197,7 @@ const page = () => {
                 <div className='bg-white shadow'>
                   <div className='px-4 py-8 sm:py-10 flex flex-col ga-5'>
                     <h1 className="font-bold text-lg">
-                      Your Payment is Successful and You Will be Redirected To Orders Page In 3 Seconds.....
+                      Your Payment is Successful and You Will be Redirected To Orders Page In 4-5 Seconds.....
                     </h1>
                   </div>
                 </div>
@@ -212,8 +214,8 @@ const page = () => {
     )
   }
   return (
-    <div className='flex mx-5 my-4 w-[100%] overflow-x-hidden'>
-      <div className='flex-row w-[50%] mr-2 mb-2'>
+    <div className='mx-5 my-4 w-[99%] overflow-x-hidden lg:flex'>
+      <div className='flex-row w-[98%] lg:w-[50%] mr-2 mb-2 overflow-x-hidden overflow-y-auto'>
         <h1 className='mb-3'>Cart Summary</h1>
         <div className='flex flex-col w-[100%]  my-5 z-50 shadow-2xl  shadow-zinc-300 border rounded-sm border-slate-200 h-[calc(100vh-100px)] border-x-2 border-y-2 overflow-y-auto'>
           {
@@ -225,7 +227,7 @@ const page = () => {
                 <div
                   className="my-5 mx-5 mb-5 flex flex-col"
                 >
-                  <div className="flex flex-col w-full h-[200px]">
+                  <div className="flex flex-col w-full h-[110px]">
                     <Image
                       alt={product.description}
                       src={product.imageUrl}
@@ -233,7 +235,7 @@ const page = () => {
                       width={80}
                       style={ImageStyle}
                     />
-                    <h1 className="flex font-bold text-center ml-3 absolute top-[32px] left-[90px] w-[256px] sm:w-auto "
+                    <h1 className="flex font-bold text-center ml-[19px] absolute top-[32px] left-[90px] w-[178px] sm:w-auto "
                     style={{ top: `calc(160 * ${index} + 160px)` }}
                     >
                       {product.name}
@@ -251,7 +253,7 @@ const page = () => {
           }
         </div>
       </div>
-      <div className='flex w-[50%] mr-2'>
+      <div className='flex w-[100%] lg:w-[50%] mr-2 overflow-x-hidden overflow-y-auto'>
           <div className='flex flex-col w-[100%] mr-[17px]'>
             <div className='mb-2 flex-row'>
               <h1 className='font-semibold'>Shipping Address Details</h1>
@@ -312,7 +314,7 @@ const page = () => {
                         className={`w-full ml-[13px] mr-[13px] mb-[13px] ${addressClick ? '' : 'opacity-50'}`} 
                         disabled={!isDisable}
                         onClick={handleCheckOut}
-                      >Check It Out</BlackButton>
+                      >make payment</BlackButton>
                     </div>
                     </div> 
                   : null

@@ -6,9 +6,8 @@ import InputComponent from "../components/InputComponent";
 import SelectComponent from "../components/SelectComponent";
 import { UploadCloudIcon } from "lucide-react";
 import axios from "axios";
-import { toast,ToastContainer } from "react-toastify";
-import { UserDetails } from "../../services/userDetails";
-import { userView } from "../../utils/userView";
+import { toast } from "react-toastify";
+import { checkAdmin } from "../../services/AdminServices";
 
 const page = () => {
   const [formValues, setFormValues] = useState({});
@@ -16,15 +15,24 @@ const page = () => {
   const [sizes,setSizes] = useState([])
   const [ready,setIsReady] = useState(false)
   const [isAdminView,setIsAdminView] = useState(false)
-  console.log("IsAdminView",isAdminView)
 
   useEffect(()=>{
-    const fetchedUser = userView()
-    if(fetchedUser){
-      setIsAdminView(true)
-      setIsReady(true)
+    const getUser = async () =>{
+      const fetchedUser = await checkAdmin()
+      console.log(fetchedUser)
+      if(fetchedUser.data){
+        setIsAdminView(true)
+      }
+      if(!fetchedUser){
+        toast.error("error in fetching user",{position:"top-right"})
+      }
     }
+    getUser()
   },[])
+
+  useEffect(()=>{
+    setIsReady(true)
+  },[isAdminView])
 
   const addSize = (newSize) => {
     setSizes((prevSizes)=>[...prevSizes,newSize])
@@ -33,31 +41,30 @@ const page = () => {
   const submitForm = async () => {
     const requiredFields = ['name','price','description','category', 'deliveryInfo', 'onSale']
     if(sizes.length === 0){
-      console.log("Sizes are not selected")
+      toast.info('Sizes not selected',{position:'top-right'})
       return
     }
 
     if(!ImageChosen){
-      console.log("Image not Chosen ")
+      toast.info('Images not selected',{position:'top-right'})
       return
     }
 
     for (const field of requiredFields) {
       if (!formValues[field]) {
-        console.log(`Please fill in the "${field}" field.`);
+        toast.info(`${field} not selected`,{position:'top-right'})
         return;
       }
     }
-    toast.success("Saved Successfully")
-    console.log(formValues)
+    toast.success("Saved Successfully",{position:'top-right'})
     const {imageUrl,name,price,category,description,deliveryInfo,onSale,priceDrop} = formValues
     const availableSizes = JSON.stringify(sizes)
     const result = axios.post('/api/add-product',{imageUrl,availableSizes,name,price,category,description,deliveryInfo,onSale,priceDrop,
     }, {headers: { 'Content-Type': 'application/json' }})
     result.then((response)=>{
-      console.log(response.data)
+      toast.success("product added successfully",{position:'top-right'})
     }).catch((error)=>{
-      console.log(error,"Error in storing the data")
+      toast.error("Failed to add Product",{position:'top-right'})
     })
   }
 
@@ -78,7 +85,7 @@ const page = () => {
 
   return (
     <>
-      {ready ? (
+      {ready && isAdminView ? (
       <div className="flex w-full mx-5 my-5 flex-col mr-[68px]">
         {isAdminView ? (
         <>
@@ -161,7 +168,7 @@ const page = () => {
         ) :(<h1>This page is for the Admin And You are not the Admin</h1>)}
       </div>
       )
-      :(<h1>Loading Please Wait</h1>)}
+      :(isAdminView?<h1>Loading Please Wait</h1>:<h1>This page for the Admin You are not the admin please take a leave...</h1>)}
     </>
   );
 };

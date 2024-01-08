@@ -10,7 +10,7 @@ export const  GET = async () => {
         console.log(userEmail)
         const userDetails = await User.findOne({email:userEmail})
         console.log(userDetails)
-        return NextResponse.json(userDetails,{status:200,statusText:"successfully Posted to the client"})
+        return NextResponse.json({status:200,statusText:"successfully Posted to the client",data:userDetails})
     }catch(error){
         console.log(error)
         return NextResponse.json({status:"NOT Ok",message:"Error in sending to the client page"})

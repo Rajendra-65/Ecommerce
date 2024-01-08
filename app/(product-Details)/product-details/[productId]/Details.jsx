@@ -49,8 +49,8 @@ const Details = ({product}) => {
               <BlackButton>Add To Cart</BlackButton>
           </div>
           <div className='flex flex-col items-start'>
-            <h1 className='mt-3  mb-2'>Free shipping worldwide</h1>
-            <h1 className='mt-1 mb-1'>Cancel Anytime</h1>
+            <h1 className='mt-3  mb-2 font-medium'>Free shipping worldwide</h1>
+            <h1 className='mt-1 mb-1 font-medium'>Cancel Anytime</h1>
           </div>
           <div className='mt-2 flex flex-row'>
             <h1 className='font-bold mb-3'>Description</h1>

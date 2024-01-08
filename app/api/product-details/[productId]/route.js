@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 export async function GET(request,{params}){
     try{
         const {productId} = params
+        console.log(productId,"of the server")
         if (!mongoose.Types.ObjectId.isValid(productId)) {
             console.log('Invalid ObjectId format');
             return NextResponse.json("Invalid product ID", { statusText: "ok" });
@@ -15,7 +16,7 @@ export async function GET(request,{params}){
             return NextResponse.json("Product not found", { statusText: "ok" });
         }
         console.log('ProductId:', productId)
-        return NextResponse.json(product,{status:200,statusText:"ok"})
+        return NextResponse.json({status:200,statusText:"ok",data:product})
     }catch(error){
         console.log('Error in getting the Product',error)
         return NextResponse.json("product not Found",{statusText:"ok"})

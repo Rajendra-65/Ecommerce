@@ -8,9 +8,9 @@ export const getAllProduct = async () => {
 
 export const getProduct = async (productId) => {
     console.log(productId,"Get Product")
-    const result = await axios.get(`/api/product-details/${productId}`).then((response) => response.data)
+    const result = await axios.get(`/api/product-details/${productId}`)
     console.log(result)
-    return result
+    return result.data
 }
 
 export const RemoveFromCart = async(productId) =>{

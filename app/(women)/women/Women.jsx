@@ -5,6 +5,7 @@ import BlackButton from '../../components/button'
 import { useRouter } from 'next/navigation'
 import { checkAdmin } from '../../../services/AdminServices'
 import Image from 'next/image'
+import { toast } from 'react-toastify'
 
 const Women = () => {
   const [AllProducts,setAllProducts] = useState([])
@@ -17,8 +18,9 @@ const Women = () => {
             console.log(res)
             if(res.data){
                 setIsAdminView(true)
-                setFirstEffect(true)
+                
             }
+            setFirstEffect(true)
         }
         checkForAdmin()
     },[])
@@ -39,9 +41,11 @@ const handleDetailsClick = (productId) => {
 const handleCartClick = async (productId) => {
 try{
     const newCart = await addToCart(productId)
-    console.log(newCart)
+    if(newCart){
+        toast.success("added to Cart",{position:"top-right"})
+    }
 }catch(error){
-    console.log('error in updating cart',error)
+    toast.error("Unable to added to cart try again",{position:"top-right"})
 }
 }
 
@@ -50,12 +54,12 @@ try{
     const response = await axios.post(`/api/delete-product/${productId}`)
     if(response.statusText === "ok"){
         router.refresh()
-        console.log("Successfully post request sent and Product Deleted")
+        toast.success("product deleted",{position:"top-right"})
     }else{
-        console.log("Failed to Delete the Product")
+        toast.error("product no  deleted",{position:"top-right"})
     }
 }catch(error){
-    console.log("error at the post request",error)
+    toast.error("Error in the api route try again",{position:"top-right"})
 }
 }
 
@@ -76,12 +80,12 @@ const imageStyle = {
 return (
   <>
       {
-          AllProducts ? (<div className='flex flex-row mx-[25px] my-[10px] w-full ml-[61px] flex-wrap items-start'>
+          AllProducts ? (<div className='flex flex-row mx-[25px] my-[10px] w-full ml-[61px] flex-wrap items-start' key="jkl">
           {AllProducts.map((product,i) => (
           <>
               <div 
                   className="flex flex-col h-[500px] w-[300px] mx-3 my-3  relative border-[1px] border-black"
-                  key={i}
+                  key={product._id}
               >
                       <Image 
                           alt={product.name}

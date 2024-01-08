@@ -26,9 +26,8 @@ const page = () => {
     const fetchProduct = async () => {
       try {
         const response = await getCartItem();
-        ItemArray = [...response];
-        console.log(response);
-        console.log(ItemArray);
+        ItemArray = [response.data];
+        console.log(ItemArray)
         setFirstEffectComplete(true);
       } catch (error) {
         console.log("error in fetching the cart Products", error);
@@ -41,10 +40,11 @@ const page = () => {
     const fetchProduct = async () => {
       if (firstEffectComplete) {
         const fetchedProducts = [];
-        for (const item of ItemArray) {
+        for(const item of ItemArray[0]){
           try {
+            console.log(item)
             const result = await getProduct(item);
-            fetchedProducts.push(result);
+            fetchedProducts.push(result.data);
           } catch (error) {
             console.log("error in getting single product details", error);
           }
@@ -65,7 +65,6 @@ const page = () => {
   // When Someone Click ON the remove button
   const handleRemoveClick = async (productId) => {
     try{
-      console.log("code reached to the handler remove")
       const response = await RemoveFromCart(productId)
       window.location.reload()
     }catch(error){
@@ -83,7 +82,7 @@ const page = () => {
             <div
               className="my-5 mx-5 mb-5 flex flex-row justify-between"
             >
-              <div className="flex flex-col w-full h-[200px]">
+              <div className="flex flex-col w-full h-[110px]">
                 <Image
                   alt={product.description}
                   src={product.imageUrl}
@@ -91,7 +90,7 @@ const page = () => {
                   width={80}
                   style={ImageStyle}
                 />
-                <h1 className="flex font-bold text-center ml-3 absolute top-[32px] left-[90px] w-[256px] sm:w-auto "
+                <h1 className="flex font-bold text-center ml-[19px] absolute top-[32px] left-[90px] w-[176px] sm:w-auto "
                 style={{ top: `calc(160 * ${index} + 160px)` }}
                 >
                   {product.name}

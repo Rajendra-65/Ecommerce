@@ -4,6 +4,7 @@ import {getMenProducts,addToCart} from "../../../services/ProductService"
 import BlackButton from "../../components/button"
 import { useRouter } from "next/navigation";
 import { checkAdmin } from "../../../services/AdminServices";
+import { toast } from 'react-toastify'
 import Image from "next/image";
 const Men = () => {
   const [AllProducts,setAllProducts] = useState(null)
@@ -41,9 +42,11 @@ const handleDetailsClick = (productId) => {
 const handleCartClick = async (productId) => {
   try{
       const newCart = await addToCart(productId)
-      console.log(newCart)
+      if(newCart){
+        toast.success('product Added successfully',{position:'top-right'})
+      }
   }catch(error){
-      console.log('error in updating cart',error)
+      toast.error('try again',{position:'top-right'})
   }
 }
 

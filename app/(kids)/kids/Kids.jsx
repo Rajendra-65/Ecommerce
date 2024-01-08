@@ -5,7 +5,7 @@ import BlackButton from "../../components/button";
 import {getKidProducts} from "../../../services/ProductService"
 import { useRouter } from "next/navigation";
 import { addToCart } from "../../../services/ProductService";
-import { toast } from "react-hot-toast";
+import { toast } from 'react-toastify'
 import {checkAdmin} from "../../../services/AdminServices"
 
 
@@ -19,9 +19,9 @@ const Kids = () => {
             const res = await checkAdmin()
             console.log(res)
             if(res.data){
-                setIsAdminView(true)
-                setFirstEffect(true)
+                setIsAdminView(true)                
             }
+            setFirstEffect(true)
         }
         checkForAdmin()
     },[])
@@ -30,6 +30,7 @@ const Kids = () => {
         const fetchKidProduct = async () => {
             console.log("Kid Product Reached")
             const res = await getKidProducts()
+            console.log(res.data)
             setAllProducts(res.data)
         }
         fetchKidProduct()
@@ -37,17 +38,15 @@ const Kids = () => {
 
     const router = useRouter()
 const handleDetailsClick = (productId) => {
-    console.log("Details Of the product Clicked")
-    console.log(productId)
     router.push(`/product-details/${productId}`)
 }
 
 const handleCartClick = async (productId) => {
     try{
         const newCart = await addToCart(productId)
-        console.log(newCart)
+        toast.success('Added to cart',{position:"top-right"})
     }catch(error){
-        console.log('error in updating cart',error)
+        toast.error('Error in Adding to cart',{position:'top-right'})
     }
 }
 
