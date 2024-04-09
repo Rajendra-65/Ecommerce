@@ -35,7 +35,8 @@ export default function Home() {
           <h1 className='font-bold '>on Everything</h1>
         </div>
         <div className='mt-3'>
-          <p className='font-medium ml-[2px] w-full'> Whether you're seeking the latest fashion trends, upgrading your tech gadgets, or enhancing your living space, Ecommercery is your one-stop-shop. Explore an array of carefully curated items, benefit from exclusive deals, and enjoy the convenience of secure and swift delivery. Elevate your online shopping journey with Ecommercery - where style, quality, and convenience converge.</p>
+        <p className='font-medium ml-[2px] w-full'> Whether you&apos;re seeking the latest fashion trends, upgrading your tech gadgets, or enhancing your living space, Ecommercery is your one-stop-shop. Explore an array of carefully curated items, benefit from exclusive deals, and enjoy the convenience of secure and swift delivery. Elevate your online shopping journey with Ecommercery - where style, quality, and convenience converge.</p>
+
         </div>
         <div className='mt-3 flex items-center m-auto'>
           <BlackButton onClick={()=>router.push('/all-products')}>VISIT SHOP</BlackButton>
