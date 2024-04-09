@@ -8,7 +8,8 @@ import { UploadCloudIcon } from "lucide-react";
 import axios from "axios";
 import { toast,ToastContainer } from "react-toastify";
 import { useParams } from "next/navigation";
-const page = () => {
+
+const Page = () => {
   const params = useParams()
   const {productId} = params
   const [formValues, setFormValues] = useState({});
@@ -175,4 +176,4 @@ const page = () => {
   };
 }
 
-export default page;
+export default Page;

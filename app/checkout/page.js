@@ -13,7 +13,7 @@ import { toast } from 'react-toastify'
 
 let ItemArray = []
 let checkoutFormData
-const page = () => {
+const Page = () => {
   const [firstEffectComplete,setFirstEffectComplete] = useState(false)
   const [products,setProducts] = useState([])
   const [addresses, setAddresses] = useState([])
@@ -317,4 +317,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

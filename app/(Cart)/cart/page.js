@@ -9,7 +9,7 @@ let ItemArray = [];
 let price = 0
 let count = 0
 // let products = [];
-const page = () => {
+const Page = () => {
   const [products,setProducts] = useState([])
   const [totalPrice,setTotalPrice] = useState(0)
   const [isMounted, setIsMounted] = useState(false);
@@ -138,4 +138,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

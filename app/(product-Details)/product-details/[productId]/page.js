@@ -8,7 +8,7 @@ import {toast} from 'react-toastify'
 import { getProduct } from '../../../../services/ProductService'
 import Details from './Details'
 
-const page =() => {
+const Page =() => {
     const params = useParams()
     const [product,setProduct] = useState(null)
     const {productId} = params
@@ -43,4 +43,4 @@ const page =() => {
     )
 }
 
-export default page
+export default Page

@@ -9,7 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { checkAdmin } from "../../services/AdminServices";
 
-const page = () => {
+const Page = () => {
   const [formValues, setFormValues] = useState({});
   const [ImageChosen,setImageChosen] = useState(false)
   const [sizes,setSizes] = useState([])
@@ -172,4 +172,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

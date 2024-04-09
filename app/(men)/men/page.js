@@ -7,7 +7,7 @@ export const metadata = {
 }
 
 
-const page = async () => {
+const Page = async () => {
   return (
     <div className='flex flex-row w-[100vw] h-[100vh] '>
       <Men/>
@@ -15,4 +15,4 @@ const page = async () => {
   )
 }
 
-export default page
+export default Page

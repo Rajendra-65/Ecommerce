@@ -1,7 +1,7 @@
 import React from 'react'
 import Account from "./account"
 
-const page = () => {
+const Page = () => {
   return (
     <div className=''>
       <Account/>
@@ -9,4 +9,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
