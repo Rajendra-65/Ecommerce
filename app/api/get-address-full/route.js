@@ -12,6 +12,7 @@ export const GET = async () => {
         }catch(e){
             console.log(e)
         }
+        
         const address = await Address.find({user:fetchedUser._id})
         if(address){
             return NextResponse.json(address,{status:200,statusText:"Ok"})

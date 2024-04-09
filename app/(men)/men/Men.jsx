@@ -76,11 +76,11 @@ const imageStyle = {
   return (
     <>
         {
-            AllProducts ? (<div className='flex flex-row mx-[25px] my-[10px] w-full ml-[61px] flex-wrap items-start'>
+            AllProducts ? (<div className='flex flex-row mx-[25px] my-[10px] w-full ml-[61px] flex-wrap items-start gap-[30px]'>
             {AllProducts.map((product,i) => (
             <>
                 <div 
-                    className="flex flex-col h-[500px] w-[300px] mx-3 my-3  relative border-[1px] border-black"
+                    className="flex flex-col h-[530px] w-[300px] mx-3 my-3  relative border-[1px] border-black"
                     key={i}
                 >
                         <Image 
