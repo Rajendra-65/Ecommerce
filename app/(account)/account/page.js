@@ -1,5 +1,5 @@
 import React from 'react'
-import Account from "./account"
+import Account from "./Account"
 
 const Page = () => {
   return (
