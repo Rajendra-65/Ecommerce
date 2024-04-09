@@ -1,5 +1,5 @@
 import React from 'react'
-import Kids from './kids'
+import Kids from './Kids'
 
 export const metadata = {
     title: 'Kids-section',
