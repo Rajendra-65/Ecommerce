@@ -32,7 +32,7 @@ export const POST = async (request, { params }) => {
             { new: true }
         );
         console.log(updatedAddress)
-        return NextResponse.json(updatedAddress, { status: "200", statusText: "Ok" });
+        return NextResponse.json({ status: "200", statusText: "Ok" ,data:updatedAddress});
     } catch (error) {
         console.log('Error in the Post route', error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: "500", statusText: "Internal Server Error" });

@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import UpdateAddress from '../../components/updateAddress';
+import UpdateAddress from '../../components/UpdateAddress';
 import { useParams } from 'next/navigation';
 import { getSingleAddress } from '../../../services/AddressService';
 

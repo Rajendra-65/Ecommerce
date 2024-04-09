@@ -89,8 +89,8 @@ const Page = () => {
                                             <ul className='flex flex-col gap-4'>
                                                 {
                                                     allOrderForAllUsers.map((item, index) => (
-                                                        <li key={item._id} className='bg-white shadow p-5 flex flex-col space-y-3 py-6 text-left'>
-                                                            <div className='flex'>
+                                                        <li key={item._id} className='bg-white shadow p-5 flex flex-col space-y-3 py-6 text-left overflow-x-hidden overflow-y-auto'>
+                                                            <div className='flex flex-col'>
                                                                 <h1 className='font-bold text-lg mb-3 flex-1'>#order:{item._id}</h1>
                                                                 <div className='flex items-center'>
                                                                     <p className='mr-3 text-sm font-medium text-gray-900'>
@@ -101,7 +101,7 @@ const Page = () => {
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                            <div className='flex gap-2'>
+                                                            <div className='flex gap-2 overflow-x-hidden flex-wrap'>
                                                                 {images[index]?.images.map((imageUrl, imgIndex) => (
                                                                     <div key={imgIndex} className='shrink-0'>
                                                                         <Image

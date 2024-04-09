@@ -28,7 +28,7 @@ const page =() => {
         const fetchProduct = async () => {
             try{
                 const fetchedProduct = await getProduct(productId)
-                setProduct(fetchedProduct)
+                setProduct(fetchedProduct.data)
                 
             }catch(error){
                 toast.error("SuccessFully Deleted",{position:'top-right'})

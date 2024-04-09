@@ -7,6 +7,7 @@ import AddressForm from "../../components/AddressForm";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import {UserDetails} from "../../../services/userDetails"
+import { toast } from "react-toastify";
 let AllAddress = []
 let count = 0
 const Account = () => {
@@ -39,16 +40,15 @@ const Account = () => {
 
   const fetchAddress = async () => {
     try {
-      const response = await axios.get("/api/get-address")
+      const response = await axios.get("/api/get-address-full")
       const data = response.data
-      
       setAddresses(data)
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  const updateHandler = async (addressId) => {
+  const updateHandler = async ( addressId ) => {
     
       router.push(`/update-address/${addressId}`)
   }
@@ -56,8 +56,13 @@ const Account = () => {
   const deleteHandler = async (addressId) => {
     
     const result = await deleteAddress(addressId)
-    
-    window.location.reload()
+    if(result.data){
+      toast.success("Address deleted",{position:"top-right"})
+      window.location.reload()
+    }
+    else{
+      toast.error("please try again",{position:"top-right"})
+    }
   }
 
   const handleAddressFormSubmit = () => {

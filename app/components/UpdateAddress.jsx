@@ -4,6 +4,8 @@ import { addNewAddressFormControls } from '../../utils'
 import { updateSingleAddress } from '../../services/AddressService'
 import InputComponent from './InputComponent'
 import BlackButton from './button'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 const UpdateAddress = ({address , addressId}) => {
     const [FormValues,SetFormValues] = useState({})
@@ -17,9 +19,17 @@ const UpdateAddress = ({address , addressId}) => {
     useEffect(()=>{
         SetFormValues(address)
     },[])
-
+    const router = useRouter()
     const handleClick = async () => {
         const response = await updateSingleAddress(addressId,FormValues)
+        console.log(response.data)
+        if(response.data){
+            toast.success('data Updated',{position:'top-right'})
+            router.push('/account')
+        }
+        else{
+            toast.error('try Again')
+        }
     }
 
     return (

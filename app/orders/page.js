@@ -25,7 +25,8 @@ const Orders = () => {
   }
 
   async function fetchUserDetails () {
-    const user = await UserDetails()
+    const details = await UserDetails()
+    const user = details.data
     const fetchedOrders = await getAllOrdersForUser(user?._id)
     setAllOrders(fetchedOrders.data)
   }
@@ -43,8 +44,8 @@ const Orders = () => {
                     <ul className='flex flex-col gap-4'>
                       {
                         AllOrders.map((item) =>(
-                          <li key={item._id} className='bg-white shadow p-5 flex flex-col space-y-3 py-6 text-left'>
-                            <div className='flex'>
+                          <li key={item._id} className='bg-white shadow p-5 flex flex-col space-y-3 py-6 text-left overflow-x-hidden overflow-y-auto'>
+                            <div className='flex flex-col'>
                               <h1 className='font-bold text-lg mb-3 flex-1'>#order:{item._id}</h1>
                               <div className='flex items-center'>
                                 <p className='mr-3 text-sm font-medium text-gray-900'>
@@ -55,7 +56,7 @@ const Orders = () => {
                                 </p>
                               </div>
                             </div>
-                            <div className='flex gap-2'>
+                            <div className='flex gap-2 flex-wrap'>
                               {
                                 item.orderItems.map((orderItem,index) =>(
                                   <div 
