@@ -5,6 +5,7 @@ import BlackButton from "./button";
 import { useRouter } from "next/navigation";
 import { checkAdmin } from "../../services/AdminServices";
 import { UserDetails } from "../../services/userDetails";
+import { useClerk } from "@clerk/clerk-react";
 import { useAuth } from "@clerk/nextjs";
 
 const Navbar = () => {
@@ -13,6 +14,7 @@ const Navbar = () => {
   const [isAdminView, setIsAdminView] = useState(false);
   const [openNav, setOpenNav] = useState(false);
   const [windowSize, setWindowSize] = useState(0);
+  const { signOut } = useClerk()
   const router = useRouter();
 
   const mobileNavOptions = isAdminView ? adminNavOptions : navOptions;
@@ -131,7 +133,7 @@ const Navbar = () => {
           </Fragment>
         ) : null}
         {user ? (
-          <BlackButton onClick={() => router.push("/logOut")}>Logout</BlackButton>
+          <BlackButton onClick={() => signOut(() => router.push("/"))}>Logout</BlackButton>
         ) : (
           <BlackButton onClick={() => router.push("/sign-in")}>Register</BlackButton>
         )}

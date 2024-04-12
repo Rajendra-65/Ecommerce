@@ -8,6 +8,7 @@ import { UploadCloudIcon } from "lucide-react";
 import axios from "axios";
 import { toast,ToastContainer } from "react-toastify";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const params = useParams()
@@ -17,6 +18,7 @@ const Page = () => {
   const [existingProduct,setExistingProduct] = useState(null)
   const [imageChosen,setImageChosen] = useState(true)
   const [sizes,setSizes] = useState([])
+  const router = useRouter()
   useEffect(()=> {
     setIsMounted(true)
   },[])
@@ -70,7 +72,9 @@ const Page = () => {
           progress: undefined,
           theme: "light",
           });
-      }).catch((error)=>{
+      },
+      router.push('/all-products')
+    ).catch((error)=>{
       toast.error("something went wrong try again",{position:'top-right'})
   })
 }

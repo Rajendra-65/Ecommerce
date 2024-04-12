@@ -61,7 +61,6 @@ try{
 }
 
 const handleUpdateClick = (productId) => {
-alert(productId)
 router.push(`/update-product/${productId}`)
 // updateProduct(productId)
 }
@@ -77,7 +76,7 @@ const imageStyle = {
 return (
   <>
       {
-          AllProducts ? (<div className='flex flex-row mx-[25px] my-[10px] w-full ml-[61px] flex-wrap items-start' key="jkl">
+          AllProducts ? (<div className='flex flex-row mx-[25px] my-[10px] w-full ml-[61px] flex-wrap items-start gap-[30px] place-content-center mt-[66px]' key="jkl">
           {AllProducts.map((product,i) => (
           <>
               <div 

@@ -76,7 +76,6 @@ const handleDeleteClick = async (productId) => {
 }
 
 const handleUpdateClick = (productId) => {
-  alert(productId)
   router.push(`/update-product/${productId}`)
   // updateProduct(productId)
 }
@@ -92,11 +91,11 @@ const imageStyle = {
     // const plainProduct = product.toObject ? product.toObject() : product;
 return (
     <>{
-            firstEffect && products ? (<div className='flex flex-row mx-[25px] my-[10px] w-full ml-[61px] flex-wrap items-start overflow-x-hidden !important'>
+            firstEffect && products ? (<div className='flex flex-row mx-[25px] my-[10px] w-full ml-[61px] flex-wrap items-start overflow-x-hidden !important gap-[25px] mt-[66px] place-content-center'>
             {products.map((product,i) => (
             <>
                 <div 
-                    className="flex flex-col h-[500px] w-[300px] mx-3 my-3  relative border-[1px] border-black"
+                    className="flex flex-col h-[600px] w-[300px] mx-3 my-3  relative border-[1px] border-black"
                     key={i}
                 >
                         <Image 

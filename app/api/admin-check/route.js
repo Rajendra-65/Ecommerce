@@ -7,7 +7,7 @@ export const GET = async () => {
         let flag = null
         const user = await currentUser()
         const userEmail = user.emailAddresses[0].emailAddress
-        console.log(uerEmail)
+        console.log(userEmail)
         for(let i=0;i<adminEmails.length;i++){
             if(userEmail === adminEmails[i]){
                 flag = 1
