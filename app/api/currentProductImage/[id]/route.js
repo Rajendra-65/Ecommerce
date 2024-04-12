@@ -1,12 +1,14 @@
 import mongoose from "mongoose"
 import { NextResponse } from "next/server"
 import { Product } from "../../../../models/Product"
+import { connectDb } from "../../../../utils/connectdb"
 
 export const GET = async (req,{params}) => {
     try{
         const {id} = params
         let product 
         try{
+            await connectDb()
             const objectId = new mongoose.Types.ObjectId(id)
             product = await Product.findById(objectId)
         }catch(e){

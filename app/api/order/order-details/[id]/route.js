@@ -8,6 +8,7 @@ export const GET = async (req,{params})=>{
     try{
         let order
         try{
+            await connectDb()
             const {id} = params
             const user = await currentUser()
             const userEmail = user.emailAddresses[0].emailAddress

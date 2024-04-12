@@ -2,8 +2,10 @@ import {NextResponse} from "next/server"
 import {Cart} from "../../../models/Cart"
 import { currentUser } from "@clerk/nextjs"
 import { User } from "../../../models/user"
+import { connectDb } from "../../../utils/connectdb"
 export async function GET(request){
     try{
+        await connectDb()
         let fetchedUser
         let cart
         const user = await currentUser()

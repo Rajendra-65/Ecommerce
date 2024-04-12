@@ -5,7 +5,7 @@ import { connectDb } from "../../../../utils/connectdb"
 import mongoose from "mongoose"
 export async function GET (request,{params}){
     try{
-        connectDb()
+        await connectDb()
         const {productId} = params
         const existingProduct = await Product.findById(new mongoose.Types.ObjectId(productId))
         return NextResponse.json(existingProduct,{status:200,statusText:"ok"})

@@ -1,9 +1,10 @@
 import { currentUser } from "@clerk/nextjs"
 import { NextResponse } from "next/server"
 import {adminEmails} from "../../../utils/index"
-
+import { connectDb } from "../../../utils/connectdb"
 export const GET = async () => {
     try{
+        await connectDb()
         let flag = null
         const user = await currentUser()
         const userEmail = user.emailAddresses[0].emailAddress

@@ -1,10 +1,11 @@
 import { Address } from "../../../../models/Address";
 import mongoose from "mongoose";
 import {NextResponse} from "next/server"
+import { connectDb } from "../../../../utils/connectdb";
 export const POST = async (request, { params }) => {
     try {
         const { addressId } = params;
-
+        await connectDb()
         if (!addressId || !mongoose.Types.ObjectId.isValid(addressId)) {
             return NextResponse.json({ error: 'Invalid or missing addressId' }, { status: "400", statusText: "Bad Request" });
         }

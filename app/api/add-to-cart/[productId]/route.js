@@ -2,14 +2,14 @@ import { NextResponse } from "next/server";
 import { Cart } from "../../../../models/Cart";
 import { currentUser } from "@clerk/nextjs";
 import { User } from "../../../../models/user";
-
+import { connectDb } from "../../../../utils/connectdb";
 export async function POST(request, { params }) {
     const { productId } = params;
     const presentUser = await currentUser();
     const customer_email = presentUser.emailAddresses[0].emailAddress;
-
     try {
         // Find the user by email
+        await connectDb()
         const userDetails = await User.findOne({ email: customer_email });
 
         if (userDetails) {

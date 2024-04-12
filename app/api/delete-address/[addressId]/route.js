@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server"
 import {Address} from "../../../../models/Address"
 import mongoose from "mongoose"
+import { connectDb } from "../../../../utils/connectdb"
 export const GET = async (request,{params}) => {
     try{
+        await connectDb()
         const {addressId} = params
         const convertedId = new mongoose.Types.ObjectId(addressId)
         const deletedProduct = await Address.findByIdAndDelete(convertedId)

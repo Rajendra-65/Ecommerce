@@ -2,11 +2,13 @@ import { currentUser } from "@clerk/nextjs"
 import { NextResponse } from "next/server"
 import Order from "../../../../models/Order"
 import { Cart } from "../../../../models/Cart"
+import { connectDb } from "../../../../utils/connectdb"
 export const dynamic = "force-dynamic"
 export async function POST(req){
     try{
         let saveNewOrder
         let result
+        await connectDb()
         const user = await currentUser()
         if(user){
             const data = await req.json()

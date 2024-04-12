@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import {Cart} from "../../../../models/Cart"
+import { connectDb } from "../../../../utils/connectdb";
 export async function POST(request,{params}){
     try{
+        await connectDb()
         const {productId} = params
         const cart = await Cart.findOne()
         if(!cart){

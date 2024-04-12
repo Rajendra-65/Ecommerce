@@ -1,9 +1,11 @@
 import {Product} from '../../../../models/Product'
 import {NextResponse} from "next/server"
 import mongoose from 'mongoose'
+import { connectDb } from '../../../../utils/connectdb'
 
 export async function GET(request,{params}){
     try{
+        await connectDb()
         const {productId} = params
         if (!mongoose.Types.ObjectId.isValid(productId)) {
             return NextResponse.json("Invalid product ID", { statusText: "ok" });

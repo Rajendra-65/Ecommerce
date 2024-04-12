@@ -2,8 +2,10 @@ import { NextResponse } from "next/server"
 import { Address } from "../../../models/Address"
 import { currentUser } from "@clerk/nextjs"
 import { User } from "../../../models/user"
+import { connectDb } from "../../../utils/connectdb"
 export async function POST(request,{params}){
     try{
+        await connectDb()
         const {fullName,address,city,country,postalCode} = await request.json()
         const presentUser = await currentUser()
         const customer_email = presentUser.emailAddresses[0].emailAddress
