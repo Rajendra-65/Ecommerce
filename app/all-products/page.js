@@ -34,9 +34,8 @@ const Page = () => {
     
     useEffect(()=>{
         const fetchRole= async()=>{
-            console.log("f")
             const user = await checkAdmin()
-
+            console.log(user)
             if(user.data){
                 setIsAdminView(true)
             }
