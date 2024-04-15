@@ -28,7 +28,7 @@ const Page = () => {
       try {
         const response = await getCartItem();
         ItemArray = [response.data];
-        
+        console.log(ItemArray)
         setFirstEffectComplete(true);
       } catch (error) {
         
@@ -41,6 +41,7 @@ const Page = () => {
     const fetchProduct = async () => {
       if (firstEffectComplete) {
         const fetchedProducts = [];
+        console.log(ItemArray[0])
         for(const item of ItemArray[0]){
           try {
             
