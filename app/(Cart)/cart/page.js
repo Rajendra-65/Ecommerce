@@ -41,7 +41,7 @@ const Page = () => {
     const fetchProduct = async () => {
       if (firstEffectComplete) {
         const fetchedProducts = [];
-        for(const item of ItemArray[0){
+        for(const item of ItemArray[0]){
           try {
             
             const result = await getProduct(item);
