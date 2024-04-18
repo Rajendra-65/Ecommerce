@@ -11,7 +11,6 @@ export default function Home() {
   const router = useRouter()
   useEffect(()=>{
     setIsMounted(true)
-    toast.success('home-page',{position:'top-right'})
   },[])
   const ImageStyle = {
     width:"100%",

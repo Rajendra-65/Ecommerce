@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs"
-import {User} from "../models/user"
+import {User} from "../models/User"
 
 export const CreateUser = async () => {
     try {
