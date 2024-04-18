@@ -1,6 +1,6 @@
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import {User} from "../../../models/user"
+import {User} from "../../../models/User"
 import {connectDb} from "../../../utils/connectdb"
 
 export const  GET = async () => {

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { Address } from "../../../models/Address"
 import { currentUser } from "@clerk/nextjs"
-import { User } from "../../../models/user"
+import { User } from "../../../models/User"
 import { connectDb } from "../../../utils/connectdb"
 export async function POST(request,{params}){
     try{
