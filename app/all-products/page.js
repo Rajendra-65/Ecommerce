@@ -8,6 +8,9 @@ import { checkAdmin } from '../../services/AdminServices'
 import axios from "axios"
 import { toast } from 'react-toastify'
 let AllProducts = []
+
+export const dynamic = "force-dynamic";
+
 const Page = () => {
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);

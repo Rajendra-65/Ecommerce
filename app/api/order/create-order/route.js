@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 import Order from "../../../../models/Order"
 import { Cart } from "../../../../models/Cart"
 import { connectDb } from "../../../../utils/connectdb"
-export const dynamic = "force-dynamic"
+
 export async function POST(req){
     try{
         let saveNewOrder

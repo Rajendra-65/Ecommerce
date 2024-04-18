@@ -23,8 +23,8 @@ export async function POST(req){
                         message: 'Please note that we can\'t guarantee 2-day delivery for PO boxes at this time.',
                     },
                 },
-                success_url:'http://localhost:3000/checkout' + '?status=success',
-                cancel_url:'http://localhos:3000/checkout' + "?status=cancel"
+                success_url:'https://ecommerce-puce-psi-18.vercel.app/checkout' + '?status=success',
+                cancel_url:'https://ecommerce-puce-psi-18.vercel.app/checkout' + "?status=cancel"
             })
             return NextResponse.json({
                 success:true,
