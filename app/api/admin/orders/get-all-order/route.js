@@ -4,7 +4,6 @@ import { adminEmails } from "../../../../../utils/index"
 import Order from "../../../../../models/Order"
 import { User } from "../../../../../models/User"
 import { connectDb } from "../../../../../utils/connectdb"
-export const dynamic = "force-dynamic"
 
 export async function GET(req){
     try{
