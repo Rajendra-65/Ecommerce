@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import BlackButton from '../../../components/button'
+import { addToCart } from '../../../../services/ProductService'
 const Details = ({product}) => {
   const imageStyle = {
     border:"2px solid black",
@@ -12,6 +13,16 @@ const Details = ({product}) => {
     borderRadius:"0.25rem",
     marginBottom:"4px",
     width:"100%"
+  }
+  const handleCartClick = async (productId) => {
+    try{
+        const newCart = await addToCart(productId)
+        if(newCart){
+            toast.success("SuccessFully Added to cart",{position:"top-right"})
+        }
+    }catch(error){
+        toast.error("Error in adding to the cart",{position:"top-right"})
+    }
   }
   return (
     <div className='flex flex-row w-[100%] h-[100vh] justify-between'>
@@ -46,7 +57,7 @@ const Details = ({product}) => {
               <div>
                 <h1 className='font-bold mt-1'>₹ {product.price}</h1>
               </div>
-              <BlackButton>Add To Cart</BlackButton>
+              <BlackButton onClick={()=>{handleCartClick(product._id)}}>Add To Cart</BlackButton>
           </div>
           <div className='flex flex-col items-start'>
             <h1 className='mt-3  mb-2 font-medium'>Free shipping worldwide</h1>

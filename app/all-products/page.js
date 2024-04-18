@@ -123,6 +123,7 @@ return (
                         :
                             <BlackButton onClick={()=>{handleCartClick(product._id)}}>Add To Cart</BlackButton>
                         }
+                        
                     </div>
                 </div>
             </>
