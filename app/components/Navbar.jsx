@@ -7,7 +7,7 @@ import { checkAdmin } from "../../services/AdminServices";
 import { UserDetails } from "../../services/userDetails";
 import { useClerk } from "@clerk/clerk-react";
 import { useAuth } from "@clerk/nextjs";
-
+export const dynamic = 'force-dynamic'
 const Navbar = () => {
   const [user, setUser] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
