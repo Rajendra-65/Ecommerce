@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = 'force-dynamic'
 import { adminNavOptions, navOptions } from "../../utils/index";
 import React, { Fragment, useState, useEffect } from "react";
 import BlackButton from "./button";
@@ -7,6 +8,8 @@ import { checkAdmin } from "../../services/AdminServices";
 import { UserDetails } from "../../services/userDetails";
 import { useClerk } from "@clerk/clerk-react";
 import { useAuth } from "@clerk/nextjs";
+
+
 
 const Navbar = () => {
   const [user, setUser] = useState(false);
@@ -26,6 +29,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchAdmin = async () => {
       const userDetails = await UserDetails();
+      console.log(userDetails)
       if (userDetails) {
         setUser(true);
       }
