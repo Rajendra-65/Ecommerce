@@ -7,6 +7,9 @@ const UserSchema = new Schema({
         unique: true,
         required: [true, "Email Required !!"],
     },
+    admin:{
+        type:Boolean,
+    }
 });
 
 export const User = mongoose.models?.User || mongoose.model("User", UserSchema);

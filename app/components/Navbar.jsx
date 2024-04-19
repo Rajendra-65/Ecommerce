@@ -29,9 +29,8 @@ const Navbar = () => {
       if (userDetails) {
         setUser(true);
       }
-      const res = await checkAdmin();
-      if (res.data) {
-        setIsAdminView(true);
+      if(userDetails.admin){
+        setIsAdminView(true)
       }
     };
     fetchAdmin();

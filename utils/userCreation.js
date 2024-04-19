@@ -3,6 +3,7 @@ import {User} from "../models/User"
 
 export const CreateUser = async () => {
     try {
+        let admin = false
         const user = await currentUser();
 
         if (user) {
@@ -12,9 +13,16 @@ export const CreateUser = async () => {
 
             if (!existingUser) {
                 const userId = user.id;
+                for(let i=0;i<adminEmails.length;i++){
+                    if(userEmail === adminEmails[i]){
+                        admin = true
+                        break
+                    }
+                }
                 const createdUser = new User({
                     userId: userId,
                     email: customer_email,
+                    admin: admin,
                 });
 
                 await createdUser.save();
