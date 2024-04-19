@@ -20,6 +20,6 @@ export const  GET = async () => {
         return NextResponse.json({status:200,statusText:"successfully Posted to the client",data:userDetails,admin:admin})
     }catch(error){
         console.log(error)
-        return NextResponse.json({status:"NOT Ok",message:"Error in sending to the client page"})
+        return NextResponse.json({status:"NOT Ok",message:"Error in sending to the client page",error:error})
     }
 } 
