@@ -26,6 +26,8 @@ const Navbar = () => {
   useEffect(() => {
     const fetchAdmin = async () => {
       const userDetails = await UserDetails();
+      console.log(userDetails)
+      console.log(userDetails.admin)
       if (userDetails) {
         setUser(true);
       }
