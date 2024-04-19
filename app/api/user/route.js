@@ -11,12 +11,7 @@ export const  GET = async () => {
         const user = await currentUser()
         const userEmail = user.emailAddresses[0].emailAddress
         const userDetails = await User.findOne({email:userEmail})
-        for(let i=0;i<adminEmails.length;i++){
-            if(userDetails.email === adminEmails[i]){
-                admin = true
-                break
-            }
-        }
+        admin = userDetails.admin
         return NextResponse.json({status:200,statusText:"successfully Posted to the client",data:userDetails,admin:admin})
     }catch(error){
         console.log(error)
