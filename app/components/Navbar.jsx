@@ -35,7 +35,9 @@ const Navbar = () => {
         setIsAdminView(true)
       }
     };
-    fetchAdmin();
+    if (typeof window !== 'undefined') {
+      fetchAdmin();
+    }
   }, []);
 
   useEffect(() => {
