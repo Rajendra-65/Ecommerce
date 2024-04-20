@@ -20,8 +20,6 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
           <body className={inter.className}>
-              {connectDb()}
-              {CreateUser()}
               <Navbar/>
               <ToastContainer/>
                 {children}
