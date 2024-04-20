@@ -1,5 +1,5 @@
 "use client";
-export const dynamic = 'force-dynamic'
+
 import { adminNavOptions, navOptions } from "../../utils/index";
 import React, { Fragment, useState, useEffect } from "react";
 import BlackButton from "./button";

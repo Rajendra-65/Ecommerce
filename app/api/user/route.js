@@ -2,6 +2,7 @@ import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import {User} from "../../../models/User"
 import {connectDb} from "../../../utils/connectdb"
+import { adminEmails } from "../../../utils";
 
 export const  GET = async () => {
     try{

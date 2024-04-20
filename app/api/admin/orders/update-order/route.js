@@ -4,7 +4,7 @@ import Order from "../../../../../models/Order"
 import { NextResponse } from "next/server"
 import {adminEmails} from "../../../../../utils/index"
 
-export const dynamic = 'force-dynamic'
+
 
 export async function PUT(req){
     try{

@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server'
 import { currentUser } from '@clerk/nextjs'
 const stripe = require('stripe')('sk_test_51OQuRxSF54Ms4ZBVoCSsp7b2CLXinbxnmOVzXIituFbDRkkx1Hs5p6I6hNr4gXl2qJ5vuTcDwsWDzxGxVF1RVfOF00CIt1fOTU')
-export const dynamic = 'force-dynamic'
+
 import { connectDb } from '../../../utils/connectdb'
 export async function POST(req){
     try{
