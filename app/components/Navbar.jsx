@@ -30,6 +30,7 @@ const Navbar = () => {
       if (userDetails) {
         setUser(true);
       }
+      console.log(userDetails)
       if(userDetails.admin){
         setIsAdminView(true)
       }
