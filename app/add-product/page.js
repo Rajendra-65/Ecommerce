@@ -8,6 +8,7 @@ import { UploadCloudIcon } from "lucide-react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { checkAdmin } from "../../services/AdminServices";
+import { UserDetails } from '../../services/userDetails'
 
 const Page = () => {
   const [formValues, setFormValues] = useState({});
@@ -16,18 +17,22 @@ const Page = () => {
   const [ready,setIsReady] = useState(false)
   const [isAdminView,setIsAdminView] = useState(false)
 
-  useEffect(()=>{
-    const getUser = async () =>{
-      const fetchedUser = await checkAdmin()
-      if(fetchedUser.data){
-        setIsAdminView(true)
-      }
-      if(!fetchedUser){
-        toast.error("error in fetching user",{position:"top-right"})
-      }
-    }
-    getUser()
-  },[])
+  useEffect(() => {
+        const fetchAdmin = async () => {
+            const userDetails = await UserDetails();
+            if (userDetails) {
+                setUser(true);
+            }
+            console.log(userDetails)
+            if (userDetails.admin) {
+                setIsAdminView(true)
+            }
+            setFirstEffect(true)
+        };
+        if (typeof window !== 'undefined') {
+            fetchAdmin();
+        }
+    }, []);
 
   useEffect(()=>{
     setIsReady(true)
